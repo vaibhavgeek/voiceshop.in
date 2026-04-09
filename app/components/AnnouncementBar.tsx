@@ -11,14 +11,14 @@ export default function AnnouncementBar() {
   return (
     <div className="w-full bg-black text-white text-sm py-2.5 px-4 flex items-center justify-center relative">
       <p className="text-center text-xs sm:text-sm">
-        🔥 <strong>Lifetime Deal: ₹40,000 one-time</strong>
+        🔥 <strong>India&apos;s First AI Voice Salesman</strong>
         <span className="mx-2 text-white/40">|</span>
-        Only 2 spots at this price, then ₹55,999. No recurring fees{" "}
+        40% of paid traffic leave because no one helps them buy.{" "}
         <a
-          href="#"
+          href="#cta"
           className="font-semibold underline underline-offset-2 hover:text-white/80 transition-colors"
         >
-          Claim yours
+          Book a Demo
         </a>
       </p>
       <button

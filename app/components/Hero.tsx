@@ -1,4 +1,4 @@
-import { Globe, ArrowRight, Star, CreditCard, ShieldCheck } from "lucide-react";
+import { Globe, ArrowRight, Star, CreditCard, ShieldCheck, Clock, ShoppingCart, TrendingUp } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -9,14 +9,13 @@ export default function Hero() {
             className="font-playfair italic font-normal leading-tight mb-5 px-4 text-[#0a0a0a]"
             style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
           >
-            AI Customer Service that delivers
+            India&apos;s First AI Voice Salesman
             <br />
-            faster resolutions and feels human
+            Make your website talk &amp; sell more!
           </h1>
           <p className="text-base leading-relaxed text-[#737373] max-w-xl mx-auto">
-            AI agents that remember every conversation, respond with empathy, and speak
-            HumanlyClear&trade; while creating revenue opportunities across web chat, email,
-            WhatsApp, Instagram, and Messenger
+            40% of paid traffic leave because no one helps them buy.
+            Arya speaks 12 Indian languages, works 24/7, and converts visitors into customers.
           </p>
 
           <div className="w-full mt-8">
@@ -68,7 +67,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Dashboard preview */}
+        {/* Video preview */}
         <div
           className="relative flex items-center justify-center w-full p-4 md:p-6 rounded-xl mx-4"
           style={{
@@ -77,10 +76,53 @@ export default function Hero() {
           }}
         >
           <div className="w-full h-full rounded-lg bg-white/60 shadow-inner flex items-center justify-center text-[#737373] text-sm min-h-[200px]">
-            <div className="text-center space-y-2 opacity-50">
-              <svg className="w-10 h-10 mx-auto text-[#737373]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
-              </svg>
+            <div className="text-center space-y-2">
+              <button className="w-16 h-16 mx-auto rounded-full bg-[#0a0a0a] flex items-center justify-center hover:bg-[#0a0a0a]/80 transition-colors cursor-pointer">
+                <svg className="w-6 h-6 text-white ml-1" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Without vs With Arya comparison */}
+        <div className="w-full max-w-4xl mx-auto px-4 pb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Without Arya */}
+            <div className="bg-white rounded-xl border border-[#e5e5e5] p-6 md:p-8">
+              <div className="text-sm font-medium text-[#737373] uppercase tracking-wider mb-4">Without Arya</div>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <Clock className="w-5 h-5 text-[#737373] shrink-0" />
+                  <span className="text-[#0a0a0a]">User leaves website</span>
+                </div>
+                <div className="text-sm text-[#737373]">Session: 47 seconds</div>
+                <div className="mt-4 pt-4 border-t border-[#e5e5e5]">
+                  <div className="text-sm text-[#737373] mb-1">Conversion Rate</div>
+                  <div className="text-3xl font-medium text-[#0a0a0a]">2-4%</div>
+                </div>
+              </div>
+            </div>
+
+            {/* With Arya */}
+            <div className="bg-[#0a0a0a] rounded-xl border border-[#333] p-6 md:p-8">
+              <div className="text-sm font-medium text-white/60 uppercase tracking-wider mb-4">With Arya</div>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <ShoppingCart className="w-5 h-5 text-white/70 shrink-0" />
+                  <span className="text-white">&quot;Haan madam, ye saree silk hai...&quot;</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <TrendingUp className="w-5 h-5 text-white/70 shrink-0" />
+                  <span className="text-white">Order Placed</span>
+                </div>
+                <div className="text-sm text-white/60">Conversation: 3 min 24 sec</div>
+                <div className="mt-4 pt-4 border-t border-white/10">
+                  <div className="text-sm text-white/60 mb-1">Conversion Rate</div>
+                  <div className="text-3xl font-medium text-white">15%+</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -14,9 +14,9 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "MagicalCX | Empathy-First AI for magical customer service",
+  title: "SpeedShop AI | India's First AI Voice Salesman",
   description:
-    "MagicalCX is an empathy-first AI platform that transforms customer service into a growth engine",
+    "Make your website talk & sell more. Arya speaks 12 Indian languages, works 24/7, and converts visitors into customers.",
 };
 
 export default function RootLayout({

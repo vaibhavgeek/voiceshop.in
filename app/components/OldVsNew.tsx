@@ -1,90 +1,104 @@
 import {
-  Bot,
-  Repeat2,
-  Link,
-  Split,
-  CircleHelp,
-  Mail,
-  Unplug,
   MessageCircle,
-  Brain,
-  Zap,
-  TrendingUp,
-  FileText,
-  Megaphone,
-  User,
-  Cable,
+  Globe,
+  HelpCircle,
+  ShoppingBag,
+  Handshake,
+  Search,
+  Shirt,
+  Package,
+  UserCheck,
   Undo,
   Redo,
 } from "lucide-react";
 
-const oldWayItems = [
-  { icon: Bot, text: "Fails with robotic replies when it matters" },
-  { icon: Repeat2, text: "Makes customers repeat themselves" },
-  { icon: Link, text: "Sends links when people need solutions" },
-  { icon: Split, text: "Designed to deflect tickets" },
-  { icon: CircleHelp, text: "Leaves you guessing" },
-  { icon: Bot, text: "Makes your brand sound cold and generic" },
-  { icon: Mail, text: "Tells customers to email for complex issues" },
-  { icon: Unplug, text: "Disconnected from your tools and data" },
+const offlineItems = [
+  { icon: Handshake, text: "Salesman greets in customer\u2019s language" },
+  { icon: Search, text: "Asks occasion, budget, filters 500 SKUs to 5" },
+  { icon: MessageCircle, text: 'Handles "Will this color fade?" on the spot' },
+  { icon: Shirt, text: "Shows matching blouse, suggests accessories" },
+  { icon: UserCheck, text: "Remembers repeat customers" },
 ];
 
-const newWayItems = [
-  { icon: MessageCircle, text: "Helps with human-like replies when it matters" },
-  { icon: Brain, text: "Remembers every detail, across channels" },
-  { icon: Zap, text: "Takes agentic action within the chat" },
-  { icon: TrendingUp, text: "Generate sales from support using EFRO\u2122" },
-  { icon: FileText, text: "Tells you what customers actually care about" },
-  { icon: Megaphone, text: "Makes your brand sound HumanlyClear\u2122" },
-  { icon: User, text: "Escalates to a human when needed" },
-  { icon: Cable, text: "Works seamlessly with your CRM and data" },
+const websiteItems = [
+  { icon: Globe, text: "Static homepage, English-only" },
+  { icon: ShoppingBag, text: "Customer drowns in product grid" },
+  { icon: HelpCircle, text: "Unanswered doubt = exit" },
+  { icon: Package, text: "No cross-sell, no upsell" },
+  { icon: UserCheck, text: "Every visit = stranger" },
 ];
 
 export default function OldVsNew() {
   return (
-    <section className="section-container py-16 md:py-32 border section-content-padding">
+    <section className="section-container py-16 md:py-32 border section-content-padding" id="the-problem">
       <div className="text-center mb-12 md:mb-20">
-        <h2 className="section-heading">The Old Way vs The Magical Way</h2>
+        <h2 className="section-heading">Every Showroom Knows This.<br />Your Website Does Not.</h2>
         <p className="section-subheadline">
-          Two very different ways to handle support. In 2026, only one makes sense.
+          Your offline showroom converts at 30-40%. Your website? Just 2-4%. Here&apos;s why.
         </p>
       </div>
 
       <div className="flex flex-col md:flex-row max-w-4xl mx-auto border border-border rounded-md overflow-hidden">
-        {/* Old Way */}
+        {/* Offline Showroom */}
+        <div className="w-full md:w-1/2 bg-primary px-4 py-6 md:px-6 lg:px-8 md:py-8">
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-lg md:text-xl text-primary-foreground font-normal">Offline Showroom</h3>
+            <Redo className="size-5 text-primary-foreground" />
+          </div>
+          <div className="space-y-6 pb-2 md:pb-0">
+            {offlineItems.map((item, i) => (
+              <div key={i} className="flex gap-4 items-center">
+                <item.icon className="w-5 h-5 text-primary-foreground shrink-0" />
+                <h3 className="text-base text-primary-foreground font-normal leading-snug">{item.text}</h3>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 pt-6 border-t border-white/20">
+            <div className="text-sm text-primary-foreground/60 mb-1">Conversion Rate</div>
+            <div className="text-2xl font-medium text-primary-foreground">30-40%</div>
+          </div>
+        </div>
+
+        {/* Your Website (Before Arya) */}
         <div className="w-full md:w-1/2 bg-card px-4 py-6 md:px-6 lg:px-8 md:py-8 border-b md:border-b-0 md:border-r border-border">
           <div className="flex items-center justify-between mb-8">
-            <h3 className="text-lg md:text-xl text-muted-foreground font-normal">The Old Way</h3>
+            <h3 className="text-lg md:text-xl text-muted-foreground font-normal">Your Website (Before Arya)</h3>
             <Undo className="size-5 text-muted-foreground" />
           </div>
           <div className="space-y-6 pb-2 md:pb-0">
-            {oldWayItems.map((item, i) => (
+            {websiteItems.map((item, i) => (
               <div key={i} className="flex gap-4 opacity-60 items-center">
                 <item.icon className="w-5 h-5 text-muted-foreground shrink-0" />
                 <h3 className="text-base text-foreground font-normal leading-snug">{item.text}</h3>
               </div>
             ))}
           </div>
+          <div className="mt-8 pt-6 border-t border-border">
+            <div className="text-sm text-muted-foreground mb-1">Conversion Rate</div>
+            <div className="text-2xl font-medium text-foreground">2-4%</div>
+          </div>
         </div>
+      </div>
 
-        {/* New Way */}
-        <div className="w-full md:w-1/2 bg-primary px-4 py-6 md:px-6 lg:px-8 md:py-8">
-          <div className="flex items-center justify-between mb-8">
-            <h3 className="text-lg md:text-xl text-primary-foreground font-normal">
-              The MagicalCX Way
-            </h3>
-            <Redo className="size-5 text-primary-foreground" />
-          </div>
-          <div className="space-y-6 pb-2 md:pb-0">
-            {newWayItems.map((item, i) => (
-              <div key={i} className="flex gap-4 items-center">
-                <item.icon className="w-5 h-5 text-primary-foreground shrink-0" />
-                <h3 className="text-base text-primary-foreground font-normal leading-snug">
-                  {item.text}
-                </h3>
-              </div>
-            ))}
-          </div>
+      {/* Customer & Storekeeper Voice */}
+      <div className="max-w-4xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-card border border-border rounded-lg p-6">
+          <div className="text-xs font-medium tracking-wider text-muted-foreground uppercase mb-3">Customer Voice</div>
+          <p className="text-base text-foreground italic leading-relaxed">
+            &ldquo;Hum ko bas bhojpuri aur hindi aati hai. Online kharidari nahi karte kyuki samaj hi nahi aata. Dekhke chhod dete hai&rdquo;
+          </p>
+          <p className="text-sm text-muted-foreground mt-3">
+            Translation: &ldquo;We only know Bhojpuri and Hindi. We don&apos;t shop online because we don&apos;t understand. We just look and leave.&rdquo;
+          </p>
+        </div>
+        <div className="bg-card border border-border rounded-lg p-6">
+          <div className="text-xs font-medium tracking-wider text-muted-foreground uppercase mb-3">Storekeeper Voice</div>
+          <p className="text-base text-foreground italic leading-relaxed">
+            &ldquo;I don&apos;t know what happens to rest of my website visitors&rdquo;
+          </p>
+          <p className="text-sm text-muted-foreground mt-3">
+            &mdash; Every D2C founder losing money on ads
+          </p>
         </div>
       </div>
     </section>

@@ -5,75 +5,35 @@ import { ChevronDown } from "lucide-react";
 
 type FAQItem = { q: string; a: string };
 
-const generalFAQs: FAQItem[] = [
-  {
-    q: "What is EFRO\u2122?",
-    a: "EFRO\u2122 (Empathy-First Revenue Orchestrator) is MagicalCX\u2019s built-in revenue engine. It understands customer intent in real time and suggests the right next step, upgrade, or offer only when it helps the customer move forward. That means your support doesn\u2019t just resolve issues. It quietly supports growth. More yeses. Fewer pushy moments. Revenue that feels natural, not forced.",
-  },
-  {
-    q: "What is HumanlyClear\u2122?",
-    a: "HumanlyClear\u2122 is MagicalCX\u2019s quality standard for human-grade conversations: clear, warm, and action-oriented. It makes answers easy to understand, asks only what\u2019s needed, and guides customers to the next step fast, so they feel helped (not handled) and your support and sales conversations convert better.",
-  },
+const faqItems: FAQItem[] = [
   {
     q: "Is this just another chatbot?",
-    a: "No. Chatbots follow scripts. MagicalCX understands meaning, tone, frustration, emotions, and context and solves the problem like a real teammate using EFRO\u2122 and HumanlyClear\u2122.",
+    a: "No. Arya is an AI voice salesman that speaks 12 Indian languages, understands your entire product catalog, detects customer hesitations, and actively nudges them to buy \u2014 just like your best offline salesman. Regular chatbots follow scripts. Arya sells.",
   },
   {
-    q: "Can it fix real issues or only answer questions?",
-    a: "It fixes real issues like order updates, size swaps, address changes, subscription upgrades, and booking calls \u2014 all done within the conversation.",
+    q: "Will it work on mobile?",
+    a: "Yes. Arya works seamlessly on mobile devices, which is where most of your customers browse. The voice-first interface is actually easier to use on mobile than typing.",
   },
   {
-    q: "Will it sound like a robot?",
-    a: "No. It sounds exactly like you want your brand to\u2014friendly or professional, authoritative or kind, direct or thoughtful.",
+    q: "What if customers don\u2019t want to talk?",
+    a: "That\u2019s fine! Arya also supports text-based chat. Customers can type their questions in any language. But we find that most customers from tier-2 and tier-3 cities actually prefer voice \u2014 it feels more natural to them.",
   },
   {
-    q: "Does this work for voice calls too?",
-    a: "Yes. Customers can talk naturally, and MagicalCX handles the call calmly without the usual \u201cplease hold\u201d chaos.",
+    q: "How does Aryabhatta know why they didn\u2019t buy?",
+    a: "Aryabhatta records and analyzes all conversations using AI. It identifies patterns \u2014 what percentage of visitors had price concerns, size questions, quality doubts, or delivery hesitations. It also shows you what products visitors searched for that you don\u2019t carry.",
   },
   {
-    q: "Will it replace my team?",
-    a: "No. MagicalCX works alongside your team, handling repetitive and routine tasks so your human agents can focus on what matters most.",
+    q: "Is my data safe?",
+    a: "Absolutely. All conversations are encrypted and stored securely. We follow industry-standard security practices and never share your customer data with third parties.",
   },
   {
-    q: "Is this right for my business?",
-    a: "If you want to improve sales, yes. If you sell online, definitely. If you want happier customers and fewer headaches, it\u2019s a great fit.",
-  },
-];
-
-const setupFAQs: FAQItem[] = [
-  {
-    q: "How long does setup take?",
-    a: "Most businesses are live within 24-48 hours. Our team handles the entire setup process for you.",
+    q: "What languages does Arya support?",
+    a: "Arya supports 12 Indian languages including Hindi, Tamil, Bengali, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi, Odia, Bhojpuri, and English.",
   },
   {
-    q: "Does it integrate with my existing tools?",
-    a: "Yes. MagicalCX integrates with major CRMs, e-commerce platforms, helpdesks, and communication tools.",
+    q: "How long does integration take?",
+    a: "Shopify stores can connect in one click. For WooCommerce and custom stores, integration takes just 1 day. You can start seeing results during your 14-day trial.",
   },
-  {
-    q: "Do I need technical knowledge to set it up?",
-    a: "No. Our DIY setup is simple enough for anyone, and we also offer full done-for-you white-glove onboarding.",
-  },
-];
-
-const pricingFAQs: FAQItem[] = [
-  {
-    q: "Is there a free trial?",
-    a: "Yes. We offer a 14-day free trial. Try it and see how it feels for your brand.",
-  },
-  {
-    q: "Are there any hidden fees?",
-    a: "No hidden fees. All features are included in your plan. You only pay for what you use.",
-  },
-  {
-    q: "Can I cancel anytime?",
-    a: "Yes. You can cancel your subscription at any time with no penalties.",
-  },
-];
-
-const tabData = [
-  { id: "general", label: "General", items: generalFAQs },
-  { id: "setup", label: "Setup & Technical", items: setupFAQs },
-  { id: "pricing", label: "Pricing", items: pricingFAQs },
 ];
 
 function AccordionItem({ item }: { item: FAQItem }) {
@@ -105,12 +65,8 @@ function AccordionItem({ item }: { item: FAQItem }) {
 }
 
 export default function FAQ() {
-  const [activeTab, setActiveTab] = useState("general");
-
-  const activeItems = tabData.find((t) => t.id === activeTab)?.items ?? [];
-
   return (
-    <section className="section-container py-24 md:py-32 bg-background border relative overflow-hidden">
+    <section className="section-container py-24 md:py-32 bg-background border relative overflow-hidden" id="faq">
       <div className="section-container-padding relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 section-content-padding">
           <div className="lg:col-span-5 space-y-8">
@@ -119,34 +75,26 @@ export default function FAQ() {
                 Frequently Asked Questions
               </h2>
               <p className="text-lg text-muted-foreground">
-                Everything you need to know about your intelligent, always working, lowest paid
-                employee.
+                Everything you need to know about Arya and Aryabhatta.
               </p>
+            </div>
+            <div className="pt-4">
+              <p className="text-sm text-muted-foreground">
+                Still have questions?
+              </p>
+              <a
+                href="mailto:founders@speedshop.ai"
+                className="text-sm text-foreground font-medium hover:underline mt-1 inline-block"
+              >
+                Contact us at founders@speedshop.ai
+              </a>
             </div>
           </div>
 
           <div className="lg:col-span-7">
-            {/* Tabs */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              {tabData.map((tab) => (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`inline-flex items-center justify-center font-medium rounded-full px-5 py-2 text-sm border transition-all cursor-pointer ${
-                    activeTab === tab.id
-                      ? "bg-foreground text-background border-foreground"
-                      : "border-border bg-background text-muted-foreground hover:bg-muted"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-
             {/* Accordion */}
             <div className="w-full space-y-0">
-              {activeItems.map((item, i) => (
+              {faqItems.map((item, i) => (
                 <AccordionItem key={i} item={item} />
               ))}
             </div>

@@ -1,39 +1,31 @@
 "use client";
 
 import { useState } from "react";
-import { Globe, Bot, Zap, ChartLine, LayoutDashboard, ChevronRight, ChevronDown } from "lucide-react";
+import { Plug, TestTube, Rocket, ChevronRight, ChevronDown } from "lucide-react";
 
 const steps = [
   {
-    icon: Globe,
-    title: "Enter your website",
-    description: null,
-  },
-  {
-    icon: Bot,
-    title: "MagicalCX understands",
+    icon: Plug,
+    title: "Demo Phase: One-Click Integration",
     description:
-      "MagicalCX reads your site to power a unified, brand-aligned conversation engine that responds with empathy.",
+      "Connect with Shopify in one click. Custom integrations with WooCommerce and other stores in just 1 day. See Arya in action on your own store.",
   },
   {
-    icon: Zap,
-    title: "Customer experience levels up",
-    description: null,
+    icon: TestTube,
+    title: "Trial Phase: 14-Day Trial",
+    description:
+      "50% discounted trial to measure & build confidence on the sales results. Full features, real conversations, and performance metrics from day one.",
   },
   {
-    icon: ChartLine,
-    title: "EFRO\u2122 increases revenue",
-    description: null,
-  },
-  {
-    icon: LayoutDashboard,
-    title: "Steer with a dashboard",
-    description: null,
+    icon: Rocket,
+    title: "Scaling Phase: Choose Your Plan",
+    description:
+      "Select the plan that fits your needs and scale your conversions. Flexible pricing, unlimited conversations, and priority support.",
   },
 ];
 
 export default function HowItWorks() {
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
 
   return (
     <section
@@ -43,11 +35,11 @@ export default function HowItWorks() {
       <div className="section-container-padding">
         <div className="max-w-4xl mx-auto text-center mb-16 md:mb-24">
           <h2 className="section-heading">
-            <span className="text-muted-foreground">What happens when you start</span> with
-            MagicalCX?
+            <span className="text-muted-foreground">Fast Integration. Quick Testing.</span> Trial to
+            Check Results.
           </h2>
           <p className="section-subheadline">
-            Instant, Empathetic &amp; Thoughtful Customer Experience delivered by your brand
+            Get started in minutes, not months. See real results before committing.
           </p>
         </div>
 
@@ -112,35 +104,22 @@ export default function HowItWorks() {
             <div className="relative w-full h-full rounded-3xl border border-border/60 shadow-2xl shadow-neutral-200/50 bg-white/50 backdrop-blur-xl overflow-hidden p-2">
               <div className="w-full h-full">
                 <div className="relative w-full h-full bg-gradient-to-br from-indigo-50/50 to-purple-50/50 rounded-xl border border-border/50 overflow-hidden flex items-center justify-center shadow-sm p-8">
-                  <div className="relative z-10 w-32 h-32 bg-white rounded-full shadow-2xl border border-indigo-100 flex items-center justify-center">
-                    <div className="absolute inset-0 bg-indigo-500/5 rounded-full animate-ping" />
-                    <Bot className="w-14 h-14 text-indigo-600" />
-                  </div>
-
-                  {/* Orbiting dots */}
-                  {[0, 72, 144, 216, 288].map((angle, i) => {
-                    const rad = (angle * Math.PI) / 180;
-                    const x = Math.cos(rad) * 100;
-                    const y = Math.sin(rad) * 100;
-                    return (
-                      <div
-                        key={i}
-                        className="absolute w-3 h-3 bg-indigo-400 rounded-full shadow-lg ring-2 ring-white"
-                        style={{ transform: `translateX(${x}px) translateY(${y}px)` }}
-                      />
-                    );
-                  })}
-
-                  {/* Labels */}
-                  <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute top-[20%] left-[20%] text-xs font-medium bg-white/90 px-3 py-1.5 rounded-lg border shadow-sm text-indigo-600">
-                      Tone
+                  {/* Platform logos */}
+                  <div className="flex flex-col items-center gap-8">
+                    <div className="text-xs font-medium tracking-wider text-neutral-500 uppercase">Works seamlessly with</div>
+                    <div className="grid grid-cols-2 gap-4">
+                      {["Shopify", "WooCommerce", "Magento", "Custom"].map((platform) => (
+                        <div
+                          key={platform}
+                          className="bg-white rounded-xl shadow-lg border border-neutral-100 px-6 py-4 flex items-center justify-center"
+                        >
+                          <span className="text-sm font-medium text-neutral-700">{platform}</span>
+                        </div>
+                      ))}
                     </div>
-                    <div className="absolute bottom-[25%] right-[20%] text-xs font-medium bg-white/90 px-3 py-1.5 rounded-lg border shadow-sm text-indigo-600">
-                      Policies
-                    </div>
-                    <div className="absolute top-[30%] right-[15%] text-xs font-medium bg-white/90 px-3 py-1.5 rounded-lg border shadow-sm text-indigo-600">
-                      FAQ
+                    <div className="flex items-center gap-3 mt-4">
+                      <div className="w-2 h-2 bg-neutral-400 rounded-full animate-pulse" />
+                      <span className="text-sm text-neutral-500">Integration in minutes</span>
                     </div>
                   </div>
                 </div>

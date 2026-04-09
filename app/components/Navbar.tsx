@@ -16,29 +16,29 @@ export default function Navbar() {
       <nav className="w-full bg-white/90 backdrop-blur-md border-b border-[#e5e5e5] transition-colors duration-300">
         <div className="section-container py-2.5 px-4 pr-2 md:px-6 lg:px-4 flex items-center justify-between">
           <a
-            aria-label="Magical CX Home"
+            aria-label="SpeedShop AI Home"
             className="relative inline-flex items-center focus:outline-none z-50"
             href="/"
           >
-            <span className="font-medium text-base text-[#0a0a0a]">MagicalCX</span>
+            <span className="font-medium text-base text-[#0a0a0a]">SpeedShop AI</span>
           </a>
 
           <div className="hidden md:flex items-center gap-6">
-            <a className="transition-colors text-sm text-[#0a0a0a] font-medium hover:text-black" href="#features">
-              Features
+            <a className="transition-colors text-sm text-[#737373] hover:text-[#0a0a0a]" href="#the-problem">
+              The Problem
             </a>
-            <a className="transition-colors text-sm text-[#737373] hover:text-[#0a0a0a]" href="/pricing">
-              Pricing
+            <a className="transition-colors text-sm text-[#737373] hover:text-[#0a0a0a]" href="#meet-arya">
+              Meet Arya
             </a>
-            <a className="transition-colors text-sm text-[#737373] hover:text-[#0a0a0a]" href="/about">
-              About
+            <a className="transition-colors text-sm text-[#737373] hover:text-[#0a0a0a]" href="#how-it-works">
+              How It Works
+            </a>
+            <a className="transition-colors text-sm text-[#737373] hover:text-[#0a0a0a]" href="#faq">
+              FAQ
             </a>
             <div className="flex items-center gap-6 ml-0">
-              <a className="text-[#737373] hover:text-[#0a0a0a] transition-colors text-sm" href="/auth">
-                Sign in
-              </a>
               <button className="cursor-pointer text-sm rounded-full font-medium transition-all duration-300 px-4 py-1.5 bg-black text-white hover:bg-black/80">
-                Talk to us
+                Book a Demo
               </button>
             </div>
           </div>
@@ -56,12 +56,12 @@ export default function Navbar() {
 
       {mobileOpen && (
         <div className="md:hidden fixed inset-0 top-[88px] z-40 bg-white/98 backdrop-blur-md p-6 flex flex-col gap-4 border-t border-[#e5e5e5]">
-          <a href="#features" className="text-lg text-[#0a0a0a]" onClick={() => setMobileOpen(false)}>Features</a>
-          <a href="/pricing" className="text-lg text-[#0a0a0a]">Pricing</a>
-          <a href="/about" className="text-lg text-[#0a0a0a]">About</a>
-          <a href="/auth" className="text-lg text-[#737373]">Sign in</a>
+          <a href="#the-problem" className="text-lg text-[#0a0a0a]" onClick={() => setMobileOpen(false)}>The Problem</a>
+          <a href="#meet-arya" className="text-lg text-[#0a0a0a]" onClick={() => setMobileOpen(false)}>Meet Arya</a>
+          <a href="#how-it-works" className="text-lg text-[#0a0a0a]" onClick={() => setMobileOpen(false)}>How It Works</a>
+          <a href="#faq" className="text-lg text-[#0a0a0a]" onClick={() => setMobileOpen(false)}>FAQ</a>
           <button className="mt-4 text-sm rounded-full font-medium px-4 py-2 bg-black text-white hover:bg-black/80 w-fit">
-            Talk to us
+            Book a Demo
           </button>
         </div>
       )}

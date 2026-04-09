@@ -2,44 +2,44 @@
 
 import { useState } from "react";
 import {
-  HeartHandshake,
-  FolderOpen,
-  MessageCircleMore,
-  FileText,
+  VolumeX,
+  Globe,
+  HelpCircle,
+  AlertTriangle,
 } from "lucide-react";
 
 const slides = [
   {
-    icon: HeartHandshake,
-    title: "DIY or Done-for-you",
-    subtitle: "You choose the level of involvement.",
+    icon: VolumeX,
+    title: "Silent Customers",
+    subtitle: "Your customer liked the product but doesn\u2019t know how to buy.",
     description:
-      "Simple enough to set up on your own. But if you'd prefer, we offer a full done-for-you, white-glove setup at no extra cost.",
-    quote: "Zero hassle integration. We do the heavy lifting so you don't have to.",
+      "They don\u2019t know how to browse or buy online \u2014 so they leave silently. No questions asked, no help offered. You lose the sale without ever knowing.",
+    quote: "40% of paid traffic leave because no one helps them buy.",
   },
   {
-    icon: FolderOpen,
-    title: "Memory that feels human",
-    subtitle: "Other bots forget. MagicalCX listens and remembers.",
+    icon: Globe,
+    title: "Silent Exploration",
+    subtitle: "Small town & village buyers know local language.",
     description:
-      "It recalls past chats, issues, and promises to avoid asking the same basic questions again.",
-    quote: "Your brand treats customers like a relationship, not a ticket.",
+      "English gives fear. Your website speaks only English, but your customers think in Hindi, Tamil, Bengali, Telugu. They can\u2019t express what they want.",
+    quote: "Hum ko bas bhojpuri aur hindi aati hai. Dekhke chhod dete hai.",
   },
   {
-    icon: MessageCircleMore,
-    title: "EFRO\u2122 + HumanlyClear\u2122",
-    subtitle: "Empathetic Agentic Intelligence",
+    icon: HelpCircle,
+    title: "Silent Hesitations",
+    subtitle: "Customers have doubts on quality, size, functionality.",
     description:
-      "Trained for emotional clarity and business precision, balancing customer empathy with your revenue goals.",
-    quote: "Conversations that build loyalty and lifetime value, not just resolutions.",
+      "When customers have questions about material, sizing, or quality \u2014 there\u2019s no one to answer. Every unanswered doubt is a lost sale.",
+    quote: "Will this color fade? Is this true to size? No one answers \u2014 they leave.",
   },
   {
-    icon: FileText,
-    title: "Dashboards & Insights",
-    subtitle: 'Tell you exactly "how it\'s going"',
+    icon: AlertTriangle,
+    title: "Silent Problems",
+    subtitle: "You don\u2019t know why visitors leave without buying.",
     description:
-      'Live dashboards and weekly reports give you a crystal-clear answer to "How are our conversations going?" with concrete suggestions.',
-    quote: "You start steering with clear, actionable data.",
+      "Is it the collection? The price? The size? A doubt about quality? You have no visibility into what\u2019s going wrong. You\u2019re spending on ads but flying blind.",
+    quote: "96 out of 100 visitors leave without buying. That\u2019s your money walking away.",
   },
 ];
 
@@ -51,13 +51,37 @@ export default function WhyMagicalCX() {
       <section className="section-container border py-24 md:py-32 bg-background overflow-hidden dark">
         <div className="max-w-5xl mx-auto text-center mb-16 section-container-padding">
           <h2 className="section-heading">
-            <span className="text-muted-foreground">Why MagicalCX is the</span>{" "}
-            <span>smarter choice</span>
+            <span className="text-muted-foreground">You&apos;re Paying Rs.50\u2013Rs.200 Per Click.</span>{" "}
+            <span>Most Leave in 60 Seconds.</span>
           </h2>
           <p className="section-subheadline">
-            It&apos;s the world&apos;s only AI engine that remembers like a CRM, acts like an agent,
-            and thinks like an empathetic salesperson.
+            96 out of 100 visitors leave without buying. That&apos;s your money walking away.
           </p>
+        </div>
+
+        {/* Ad Spend Funnel */}
+        <div className="max-w-3xl mx-auto mb-16 section-content-padding">
+          <div className="grid grid-cols-4 gap-2 md:gap-4 text-center">
+            {[
+              { number: "100", label: "Ad Clicks", loss: "" },
+              { number: "30", label: "Leave Immediately", loss: "-70%" },
+              { number: "17", label: "Browse Products", loss: "-45%" },
+              { number: "4", label: "Actually Buy", loss: "-21%" },
+            ].map((step, i) => (
+              <div key={i} className="relative">
+                <div className="bg-card border border-border rounded-lg p-3 md:p-4">
+                  <div className="text-xl md:text-2xl font-medium text-foreground">{step.number}</div>
+                  <div className="text-[10px] md:text-xs text-muted-foreground mt-1">{step.label}</div>
+                  {step.loss && (
+                    <div className="text-[10px] font-medium text-muted-foreground mt-1">{step.loss}</div>
+                  )}
+                </div>
+                {i < 3 && (
+                  <div className="absolute top-1/2 -right-1 md:-right-2 -translate-y-1/2 text-muted-foreground text-xs">&rarr;</div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="relative section-content-padding">
@@ -85,7 +109,7 @@ export default function WhyMagicalCX() {
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-primary/10 to-transparent pointer-events-none" />
                     <div className="relative z-10 max-w-md mx-auto">
                       <div className="text-xs font-medium tracking-[0.15em] text-muted-foreground uppercase mb-6">
-                        THE OUTCOME
+                        THE IMPACT
                       </div>
                       <p className="text-2xl md:text-3xl font-serif italic leading-snug text-foreground">
                         &ldquo;{slide.quote}&rdquo;
