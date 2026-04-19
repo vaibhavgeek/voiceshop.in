@@ -80,8 +80,10 @@ export default function WhyMagicalCX() {
                 </div>
               </div>
               {i < funnelSteps.length - 1 && (
-                <div className="absolute top-1/2 -right-px -translate-y-1/2 z-10 text-muted-foreground text-sm md:text-base">
-                  &rsaquo;
+                <div className="absolute top-1/2 -right-2 md:-right-3 -translate-y-1/2 z-10 text-muted-foreground">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-4 md:size-5">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
                 </div>
               )}
             </div>

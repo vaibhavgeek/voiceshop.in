@@ -16,7 +16,7 @@ const offlineItems = [
   { icon: Handshake, text: "Salesman greets in customer\u2019s language" },
   { icon: Search, text: "Asks occasion, budget, filters 500 SKUs to 5" },
   { icon: MessageCircle, text: 'Handles "Will this color fade?" on the spot' },
-  { icon: Shirt, text: "Shows matching blouse, suggests accessories" },
+  { icon: Shirt, text: "Cross-sells matching accessories" },
   { icon: UserCheck, text: "Remembers repeat customers" },
 ];
 
@@ -40,12 +40,12 @@ export default function OldVsNew() {
 
       <div className="flex flex-col md:flex-row max-w-4xl mx-auto border border-border rounded-md overflow-hidden">
         {/* Offline Showroom */}
-        <div className="w-full md:w-1/2 bg-primary px-4 py-6 md:px-6 lg:px-8 md:py-8">
+        <div className="w-full md:w-1/2 bg-primary px-4 py-6 md:px-6 lg:px-8 md:py-8 flex flex-col">
           <div className="flex items-center justify-between mb-8">
             <h3 className="text-lg md:text-xl text-primary-foreground font-normal">Offline Showroom</h3>
             <Redo className="size-5 text-primary-foreground" />
           </div>
-          <div className="space-y-6 pb-2 md:pb-0">
+          <div className="space-y-6 pb-6 md:pb-8">
             {offlineItems.map((item, i) => (
               <div key={i} className="flex gap-4 items-center">
                 <item.icon className="w-5 h-5 text-primary-foreground shrink-0" />
@@ -53,19 +53,19 @@ export default function OldVsNew() {
               </div>
             ))}
           </div>
-          <div className="mt-8 pt-6 border-t border-white/20">
+          <div className="mt-auto pt-6 border-t border-white/20">
             <div className="text-sm text-primary-foreground/60 mb-1">Conversion Rate</div>
             <div className="text-2xl font-medium text-primary-foreground">30-40%</div>
           </div>
         </div>
 
         {/* Your Website (Before Arya) */}
-        <div className="w-full md:w-1/2 bg-card px-4 py-6 md:px-6 lg:px-8 md:py-8 border-b md:border-b-0 md:border-r border-border">
+        <div className="w-full md:w-1/2 bg-card px-4 py-6 md:px-6 lg:px-8 md:py-8 border-b md:border-b-0 md:border-r border-border flex flex-col">
           <div className="flex items-center justify-between mb-8">
             <h3 className="text-lg md:text-xl text-muted-foreground font-normal">Your Website (Before Arya)</h3>
             <Undo className="size-5 text-muted-foreground" />
           </div>
-          <div className="space-y-6 pb-2 md:pb-0">
+          <div className="space-y-6 pb-6 md:pb-8">
             {websiteItems.map((item, i) => (
               <div key={i} className="flex gap-4 opacity-60 items-center">
                 <item.icon className="w-5 h-5 text-muted-foreground shrink-0" />
@@ -73,7 +73,7 @@ export default function OldVsNew() {
               </div>
             ))}
           </div>
-          <div className="mt-8 pt-6 border-t border-border">
+          <div className="mt-auto pt-6 border-t border-border">
             <div className="text-sm text-muted-foreground mb-1">Conversion Rate</div>
             <div className="text-2xl font-medium text-foreground">2-4%</div>
           </div>
