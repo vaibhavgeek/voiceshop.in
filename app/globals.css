@@ -4,6 +4,7 @@
   --font-sans: "Inter", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Playfair Display", "Playfair Display Fallback", ui-serif, Georgia, serif;
   --font-playfair: "Playfair Display", "Playfair Display Fallback", ui-serif, Georgia, serif;
+  --font-stix: "STIX Two Text", "STIX Two Text Fallback", ui-serif, Georgia, serif;
 }
 
 @theme inline {
@@ -162,6 +163,10 @@ body {
 /* Font utility classes */
 .font-playfair {
   font-family: var(--font-playfair);
+}
+
+.font-stix {
+  font-family: var(--font-stix);
 }
 
 /* Scrollbar hide utility */

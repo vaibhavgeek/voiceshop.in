@@ -14,27 +14,35 @@ export default function Navbar() {
 
       {/* Main nav */}
       <nav className="w-full bg-white/90 backdrop-blur-md border-b border-[#e5e5e5] transition-colors duration-300">
-        <div className="section-container py-2.5 px-4 pr-2 md:px-6 lg:px-4 flex items-center justify-between">
+        <div className="section-container py-1.5 px-4 pr-2 md:px-6 lg:px-4 flex items-center justify-between">
           <a
             aria-label="SpeedShop AI Home"
-            className="relative inline-flex items-center focus:outline-none z-50"
+            className="relative inline-flex items-center gap-2 focus:outline-none z-50"
             href="/"
           >
-            <span className="font-medium text-base text-[#0a0a0a]">SpeedShop AI</span>
+            <svg viewBox="0 0 200 200" width={36} height={36} className="flex-shrink-0">
+              <rect x="10" y="10" width="180" height="180" rx="36" fill="#0a0a0a" />
+              <path d="M 55 48 L 100 118 L 145 48" fill="none" stroke="#fff" strokeWidth="14" strokeLinecap="round" strokeLinejoin="round" />
+              {[0,1,2,3,4,5,6].map(i => {
+                const heights = [10, 18, 26, 34, 26, 18, 10];
+                const h = heights[i];
+                return (
+                  <rect key={i} x={54 + i * 13} y={162 - h} width={7} height={h} rx={3.5} fill="#fff" />
+                );
+              })}
+            </svg>
+            <span className="font-semibold text-base text-[#0a0a0a] tracking-tight">VoiceShop</span>
           </a>
 
           <div className="hidden md:flex items-center gap-6">
             <a className="transition-colors text-sm text-[#737373] hover:text-[#0a0a0a]" href="#the-problem">
-              The Problem
+              Features
             </a>
-            <a className="transition-colors text-sm text-[#737373] hover:text-[#0a0a0a]" href="#meet-arya">
-              Meet Arya
+            <a className="transition-colors text-sm text-[#737373] hover:text-[#0a0a0a]" href="/pricing">
+              Pricing
             </a>
-            <a className="transition-colors text-sm text-[#737373] hover:text-[#0a0a0a]" href="#how-it-works">
-              How It Works
-            </a>
-            <a className="transition-colors text-sm text-[#737373] hover:text-[#0a0a0a]" href="#faq">
-              FAQ
+            <a className="transition-colors text-sm text-[#737373] hover:text-[#0a0a0a]" href="/about">
+              About
             </a>
             <div className="flex items-center gap-6 ml-0">
               <button className="cursor-pointer text-sm rounded-full font-medium transition-all duration-300 px-4 py-1.5 bg-black text-white hover:bg-black/80">
@@ -56,10 +64,11 @@ export default function Navbar() {
 
       {mobileOpen && (
         <div className="md:hidden fixed inset-0 top-[88px] z-40 bg-white/98 backdrop-blur-md p-6 flex flex-col gap-4 border-t border-[#e5e5e5]">
-          <a href="#the-problem" className="text-lg text-[#0a0a0a]" onClick={() => setMobileOpen(false)}>The Problem</a>
-          <a href="#meet-arya" className="text-lg text-[#0a0a0a]" onClick={() => setMobileOpen(false)}>Meet Arya</a>
-          <a href="#how-it-works" className="text-lg text-[#0a0a0a]" onClick={() => setMobileOpen(false)}>How It Works</a>
-          <a href="#faq" className="text-lg text-[#0a0a0a]" onClick={() => setMobileOpen(false)}>FAQ</a>
+          <a href="#the-problem" className="text-lg text-[#0a0a0a]" onClick={() => setMobileOpen(false)}>Features</a>
+          <a href="/pricing" className="text-lg text-[#0a0a0a]" onClick={() => setMobileOpen(false)}>Pricing</a>
+
+          <a href="/about" className="text-lg text-[#0a0a0a]" onClick={() => setMobileOpen(false)}>About</a>
+          
           <button className="mt-4 text-sm rounded-full font-medium px-4 py-2 bg-black text-white hover:bg-black/80 w-fit">
             Book a Demo
           </button>

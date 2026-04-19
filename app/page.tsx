@@ -8,7 +8,7 @@ import FAQ from "./components/FAQ";
 import CTA from "./components/CTA";
 import AskAI from "./components/AskAI";
 import Footer from "./components/Footer";
-import ChatWidget from "./components/ChatWidget";
+import StickyCtaBar from "./components/StickyCtaBar";
 
 export default function Home() {
   return (
@@ -23,7 +23,7 @@ export default function Home() {
       <CTA />
       <AskAI />
       <Footer />
-      <ChatWidget />
+      <StickyCtaBar />
     </div>
   );
 }

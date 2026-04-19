@@ -1,4 +1,4 @@
-import { Globe, ArrowRight, Star, CreditCard, ShieldCheck, Clock, ShoppingCart, TrendingUp } from "lucide-react";
+import { Globe, ArrowRight, ShieldCheck, Clock, ShoppingCart, TrendingUp } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -6,21 +6,21 @@ export default function Hero() {
       <div className="section-container border-x flex flex-col items-center justify-center w-full pt-14 sm:pt-16 md:pt-20 pb-0 gap-6 sm:gap-8 md:gap-10">
         <div className="flex flex-col items-center text-center mt-4 sm:mt-6 md:mt-8 px-4">
           <h1
-            className="font-playfair italic font-normal leading-tight mb-5 px-4 text-[#0a0a0a]"
-            style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
+            className="font-stix font-normal leading-snug mb-5 px-4 text-[#0a0a0a]"
+            style={{ fontSize: "clamp(1.75rem, 4.5vw, 3rem)" }}
           >
-            India&apos;s First AI Voice Salesman
+            Your Shop Visitors Need Help
             <br />
-            Make your website talk &amp; sell more!
+            <span className="italic">Add Talking AI Salesmen &amp; Grow Sales</span>
           </h1>
-          <p className="text-base leading-relaxed text-[#737373] max-w-xl mx-auto">
+          <p className="text-lg leading-relaxed text-[#737373] max-w-xl mx-auto">
             40% of paid traffic leave because no one helps them buy.
             Arya speaks 12 Indian languages, works 24/7, and converts visitors into customers.
           </p>
 
           <div className="w-full mt-8">
             <div className="w-full max-w-lg mx-auto px-4">
-              <form className="relative group w-full">
+              <form id="hero-cta-form" className="relative group w-full">
                 <div className="relative">
                   <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
                     <Globe className="h-5 w-5 text-[#737373]/50 group-focus-within:text-black/40 transition-colors" />
@@ -50,18 +50,16 @@ export default function Hero() {
 
             <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-10 mt-5 text-sm text-[#737373]">
               <span className="flex items-center gap-1.5">
-                <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                <span className="font-medium text-[#0a0a0a]">4.9/5</span>{" "}
-                Customer rating
+                <Clock className="w-4 h-4 text-emerald-500" />
+                <span className="font-medium text-[#0a0a0a]">24/7</span> Live
               </span>
               <span className="flex items-center gap-1.5">
-                <CreditCard className="w-4 h-4 text-emerald-500" />
-                No credit card required
+                <Globe className="w-4 h-4 text-blue-500" />
+                <span className="font-medium text-[#0a0a0a]">15+</span> Indian Languages
               </span>
               <span className="flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-blue-500" />
-                <span className="font-medium text-[#0a0a0a]">99.9%</span>{" "}
-                Uptime SLA
+                <ShieldCheck className="w-4 h-4 text-yellow-500" />
+                <span className="font-medium text-[#0a0a0a]">0</span> charge for 14-day
               </span>
             </div>
           </div>
