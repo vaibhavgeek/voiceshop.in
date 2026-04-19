@@ -15,9 +15,9 @@ export default function Home() {
     <div className="bg-[#f8f8f8] min-h-screen">
       <Navbar />
       <Hero />
+      <WhyMagicalCX />
       <OldVsNew />
       <Features />
-      <WhyMagicalCX />
       <HowItWorks />
       <FAQ />
       <CTA />

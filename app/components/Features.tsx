@@ -214,7 +214,8 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="section-container py-24 md:py-32 border-x border-b" id="meet-arya">
+    <div className="dark bg-background">
+    <section className="section-container py-24 md:py-32 border-x border-b bg-background" id="meet-arya">
       <div className="max-w-5xl mx-auto text-center mb-16 section-container-padding">
         <h2 className="section-heading max-w-3xl mx-auto">
           <span className="text-muted-foreground">Meet the Agents.</span> Your AI-powered sales team
@@ -241,5 +242,6 @@ export default function Features() {
         ))}
       </div>
     </section>
+    </div>
   );
 }

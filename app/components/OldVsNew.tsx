@@ -80,27 +80,6 @@ export default function OldVsNew() {
         </div>
       </div>
 
-      {/* Customer & Storekeeper Voice */}
-      <div className="max-w-4xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-card border border-border rounded-lg p-6">
-          <div className="text-xs font-medium tracking-wider text-muted-foreground uppercase mb-3">Customer Voice</div>
-          <p className="text-base text-foreground italic leading-relaxed">
-            &ldquo;Hum ko bas bhojpuri aur hindi aati hai. Online kharidari nahi karte kyuki samaj hi nahi aata. Dekhke chhod dete hai&rdquo;
-          </p>
-          <p className="text-sm text-muted-foreground mt-3">
-            Translation: &ldquo;We only know Bhojpuri and Hindi. We don&apos;t shop online because we don&apos;t understand. We just look and leave.&rdquo;
-          </p>
-        </div>
-        <div className="bg-card border border-border rounded-lg p-6">
-          <div className="text-xs font-medium tracking-wider text-muted-foreground uppercase mb-3">Storekeeper Voice</div>
-          <p className="text-base text-foreground italic leading-relaxed">
-            &ldquo;I don&apos;t know what happens to rest of my website visitors&rdquo;
-          </p>
-          <p className="text-sm text-muted-foreground mt-3">
-            &mdash; Every D2C founder losing money on ads
-          </p>
-        </div>
-      </div>
     </section>
   );
 }
