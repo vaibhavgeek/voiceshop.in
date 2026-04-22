@@ -1,13 +1,12 @@
 const footerLinks = {
   Product: [
-    { label: "Meet Arya", href: "#meet-arya" },
-    { label: "Aryabhatta Dashboard", href: "#meet-arya" },
-    { label: "How It Works", href: "#how-it-works" },
-    { label: "Book a Demo", href: "#cta" },
+    { label: "Meet Arya", href: "/#meet-arya" },
+    { label: "Aryabhatta Dashboard", href: "/#meet-arya" },
+    { label: "Book a Demo", href: "/#cta" },
   ],
   Resources: [
-    { label: "FAQ", href: "#faq" },
-    { label: "Pricing", href: "#how-it-works" },
+    { label: "FAQ", href: "/#faq" },
+    { label: "Pricing", href: "/pricing" },
     { label: "Case Studies", href: "#" },
     { label: "Blog", href: "#" },
   ],

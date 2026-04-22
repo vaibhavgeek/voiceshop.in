@@ -8,47 +8,47 @@ import {
 const problems = [
   {
     icon: VolumeX,
-    title: "Silent Customers",
+    title: "No one to guide them on the site",
     description:
-      "They don\u2019t know how to browse or buy online \u2014 so they leave silently. No questions asked, no help offered. You lose the sale without ever knowing.",
-    impact: "40% of paid traffic leave because no one helps them buy.",
+      "They are on your site, but no one greets or guides them, so they leave without ever asking. You pay for the visit and still lose the sale, often with no clear signal they were stuck.",
+    impact:
+      "Nothing on the page moved them from \u201cI\u2019m here\u201d to \u201cwhat to do next\u201d \u2014 so they left right after landing.",
   },
   {
     icon: Globe,
-    title: "Silent Exploration",
+    title: "Your site is not in their language",
     description:
-      "English gives fear. Your website speaks only English, but your customers think in Hindi, Tamil, Bengali, Telugu. They can\u2019t express what they want.",
-    impact:
-      "Hum ko bas bhojpuri aur hindi aati hai. Dekhke chhod dete hai.",
+      "Search, filters, and copy are English-first; they think in Hindi, Tamil, or Bhojpuri. On site they can\u2019t use filters or the size chart with comfort, so they close the tab in the same visit.",
+    impact: "Aaye, par English samajh nahi aaya. Dekhke tab band kar diya.",
   },
   {
     icon: HelpCircle,
-    title: "Silent Hesitations",
+    title: "Doubt on the product page, no on-site response",
     description:
-      "When customers have questions about material, sizing, or quality \u2014 there\u2019s no one to answer. Every unanswered doubt is a lost sale.",
+      "On the product page they almost add to cart, but doubts about fabric, size, and quality have no on-site answer. They don\u2019t open chat; they just leave, after you already paid to get them that far.",
     impact:
-      "Will this color fade? Is this true to size? No one answers \u2014 they leave.",
+      "Fade, size, return? A static page. The doubt is real; they are gone right after a high-intent visit.",
   },
   {
     icon: AlertTriangle,
-    title: "Silent Problems",
+    title: "You do not see why the visit still fails",
     description:
-      "Is it the collection? The price? The size? A doubt about quality? You have no visibility into what\u2019s going wrong. You\u2019re spending on ads but flying blind.",
+      "Reports show traffic and product views, not which on-site moment broke trust \u2014 price, size, or delivery. You keep buying ads; the same post-visit drop repeats.",
     impact:
-      "96 out of 100 visitors leave without buying. That\u2019s your money walking away.",
+      "They reached your site and still did not buy. You can\u2019t name the on-site doubt that lost the sale.",
   },
 ];
 
 const funnelSteps = [
-  { number: "100", label: "Visit from Ads", sublabel: "You pay per click" },
-  { number: "70", label: "Leave Immediately", sublabel: "No greeting, no help" },
-  { number: "26", label: "Browse & Hesitate", sublabel: "Doubts go unanswered" },
-  { number: "4", label: "Actually Buy", sublabel: "96% money wasted" },
+  { number: "100", label: "Land on your site" },
+  { number: "70", label: "Leave in-session" },
+  { number: "26", label: "Browse, then drop" },
+  { number: "4", label: "Actually buy from your store" },
 ];
 
 export default function WhyMagicalCX() {
   return (
-    <div className="dark bg-background">
+    <div className="dark bg-background text-foreground">
     <section className="section-container border-x border-b py-24 md:py-32 bg-background" id="the-silence">
       <div className="max-w-5xl mx-auto text-center mb-16 section-container-padding">
         <h2 className="section-heading">
@@ -58,36 +58,43 @@ export default function WhyMagicalCX() {
           <span>But 90%+ don&apos;t buy. Why?</span>
         </h2>
         <p className="section-subheadline">
-          96 out of 100 visitors leave without buying. That&apos;s your money
-          walking away &mdash; silently.
+          Most of your paid clicks turn into a real visit &mdash; then people leave the site without buying. These are
+          the reasons, on the page, after they have already shown up.
         </p>
       </div>
 
       {/* Funnel */}
       <div className="max-w-3xl mx-auto mb-20 section-content-padding">
-        <div className="grid grid-cols-4 gap-0 text-center">
-          {funnelSteps.map((step, i) => (
-            <div key={i} className="relative">
-              <div className={`py-4 px-2 md:px-4 ${i === 0 ? "rounded-l-lg" : ""} ${i === funnelSteps.length - 1 ? "rounded-r-lg" : ""} ${i === funnelSteps.length - 1 ? "bg-primary text-primary-foreground" : "bg-card border-y first:border-l last:border-r border-border"}`}>
-                <div className={`text-2xl md:text-3xl font-medium ${i === funnelSteps.length - 1 ? "" : "text-foreground"}`}>
-                  {step.number}
+        <div className="flex items-center text-center">
+          {funnelSteps.map((step, i) => {
+            const isLast = i === funnelSteps.length - 1;
+            const isFirst = i === 0;
+            return (
+              <div key={i} className="flex items-center flex-1 min-w-0">
+                <div
+                  className={`flex-1 py-5 px-3 md:px-5 border-y border-l border-border ${
+                    isLast
+                      ? "bg-foreground text-background rounded-r-lg border-r"
+                      : "bg-card"
+                  } ${isFirst ? "rounded-l-lg" : ""}`}
+                >
+                  <div className={`text-2xl md:text-3xl font-semibold tracking-tight ${isLast ? "text-background" : "text-foreground"}`}>
+                    {step.number}
+                  </div>
+                  <div className={`text-xs md:text-sm mt-1.5 font-medium ${isLast ? "text-background/80" : "text-foreground"}`}>
+                    {step.label}
+                  </div>
                 </div>
-                <div className={`text-xs md:text-sm mt-1 font-medium ${i === funnelSteps.length - 1 ? "text-primary-foreground/80" : "text-foreground"}`}>
-                  {step.label}
-                </div>
-                <div className={`text-[10px] md:text-xs mt-0.5 ${i === funnelSteps.length - 1 ? "text-primary-foreground/60" : "text-muted-foreground"}`}>
-                  {step.sublabel}
-                </div>
+                {!isLast && (
+                  <div className="flex items-center justify-center w-6 md:w-8 bg-card border-y border-border text-muted-foreground shrink-0">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                  </div>
+                )}
               </div>
-              {i < funnelSteps.length - 1 && (
-                <div className="absolute top-1/2 -right-2 md:-right-3 -translate-y-1/2 z-10 text-muted-foreground">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-4 md:size-5">
-                    <polyline points="9 18 15 12 9 6" />
-                  </svg>
-                </div>
-              )}
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

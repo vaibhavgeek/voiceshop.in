@@ -166,7 +166,7 @@ export default function Pricing() {
               className="font-stix font-normal text-[#0a0a0a] mb-4"
               style={{ fontSize: "clamp(1.75rem, 4.5vw, 3rem)" }}
             >
-              From Small Business to Government
+              From free trial to enterprise
             </h2>
             <p className="section-subheadline">
               Designed for every stage of your journey. Start for Free today.
@@ -191,7 +191,7 @@ export default function Pricing() {
             className="font-stix font-normal text-[#0a0a0a] mb-4"
             style={{ fontSize: "clamp(1.75rem, 4.5vw, 3rem)" }}
           >
-            From Small Business to Government
+            From free trial to enterprise
           </h2>
           <p className="section-subheadline">
             Designed for every stage of your journey. Start for Free today.

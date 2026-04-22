@@ -13,7 +13,7 @@ export default function Navbar() {
       <AnnouncementBar />
 
       {/* Main nav */}
-      <nav className="w-full bg-white/90 backdrop-blur-md border-b border-[#e5e5e5] transition-colors duration-300">
+      <nav className="w-full bg-white/90 backdrop-blur-md border-b border-neutral-200 transition-colors duration-300 text-neutral-900">
         <div className="section-container py-1.5 px-4 pr-2 md:px-6 lg:px-4 flex items-center justify-between">
           <a
             aria-label="SpeedShop AI Home"
@@ -31,24 +31,25 @@ export default function Navbar() {
                 );
               })}
             </svg>
-            <span className="font-semibold text-base text-[#0a0a0a] tracking-tight">VoiceShop</span>
+            <span className="font-semibold text-base text-neutral-900 tracking-tight">SpeedShop AI</span>
           </a>
 
           <div className="hidden md:flex items-center gap-6">
-            <a className="transition-colors text-sm text-[#737373] hover:text-[#0a0a0a]" href="#the-problem">
+            <a className="transition-colors text-sm text-neutral-500 hover:text-neutral-900" href="/#the-problem">
               Features
             </a>
-            <a className="transition-colors text-sm text-[#737373] hover:text-[#0a0a0a]" href="/pricing">
+            <a className="transition-colors text-sm text-neutral-500 hover:text-neutral-900" href="/pricing">
               Pricing
             </a>
-            <a className="transition-colors text-sm text-[#737373] hover:text-[#0a0a0a]" href="/about">
+            <a className="transition-colors text-sm text-neutral-500 hover:text-neutral-900" href="/about">
               About
             </a>
-            <div className="flex items-center gap-6 ml-0">
-              <button className="cursor-pointer text-sm rounded-full font-medium transition-all duration-300 px-4 py-1.5 bg-black text-white hover:bg-black/80">
-                Book a Demo
-              </button>
-            </div>
+            <a
+              href="/#cta"
+              className="text-sm rounded-full font-medium transition-colors duration-200 px-4 py-1.5 bg-neutral-900 text-white hover:bg-neutral-800"
+            >
+              Book a Demo
+            </a>
           </div>
 
           <button
@@ -57,21 +58,23 @@ export default function Navbar() {
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen(!mobileOpen)}
           >
-            {mobileOpen ? <X className="text-[#0a0a0a]" size={22} /> : <Menu className="text-[#0a0a0a]" size={22} />}
+            {mobileOpen ? <X className="text-neutral-900" size={22} /> : <Menu className="text-neutral-900" size={22} />}
           </button>
         </div>
       </nav>
 
       {mobileOpen && (
-        <div className="md:hidden fixed inset-0 top-[88px] z-40 bg-white/98 backdrop-blur-md p-6 flex flex-col gap-4 border-t border-[#e5e5e5]">
-          <a href="#the-problem" className="text-lg text-[#0a0a0a]" onClick={() => setMobileOpen(false)}>Features</a>
-          <a href="/pricing" className="text-lg text-[#0a0a0a]" onClick={() => setMobileOpen(false)}>Pricing</a>
-
-          <a href="/about" className="text-lg text-[#0a0a0a]" onClick={() => setMobileOpen(false)}>About</a>
-          
-          <button className="mt-4 text-sm rounded-full font-medium px-4 py-2 bg-black text-white hover:bg-black/80 w-fit">
+        <div className="md:hidden fixed inset-0 top-[88px] z-40 bg-white/98 backdrop-blur-md p-6 flex flex-col gap-4 border-t border-neutral-200">
+          <a href="/#the-problem" className="text-lg text-neutral-900" onClick={() => setMobileOpen(false)}>Features</a>
+          <a href="/pricing" className="text-lg text-neutral-900" onClick={() => setMobileOpen(false)}>Pricing</a>
+          <a href="/about" className="text-lg text-neutral-900" onClick={() => setMobileOpen(false)}>About</a>
+          <a
+            href="/#cta"
+            className="mt-4 inline-flex w-fit text-sm rounded-full font-medium px-4 py-2 bg-neutral-900 text-white hover:bg-neutral-800 transition-colors"
+            onClick={() => setMobileOpen(false)}
+          >
             Book a Demo
-          </button>
+          </a>
         </div>
       )}
     </div>

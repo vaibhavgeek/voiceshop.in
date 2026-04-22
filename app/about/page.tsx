@@ -1,12 +1,14 @@
 import { ExternalLink } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import vaibhavImg from "../assets/vaibhav.jpg";
+import ketanImg from "../assets/ketan.jpeg";
 
 const founders = [
   {
     name: "Vaibhav Maheshwari",
     role: "CTO & Co-founder",
-    avatar: "https://i.pravatar.cc/160?img=11",
+    avatar: vaibhavImg,
     linkedin: "https://linkedin.com/in/vaibhavgeek",
     bio: "Tech nerd, obsessed about Claude Code and the future.",
     experience: [
@@ -23,7 +25,7 @@ const founders = [
   {
     name: "Ketan Kachhadiya",
     role: "CEO & Co-founder",
-    avatar: "https://i.pravatar.cc/160?img=53",
+    avatar: ketanImg,
     linkedin: "https://www.linkedin.com/in/ketan8469822270/",
     bio: "I bring clarity, focus and business at VoiceShop.",
     experience: [
@@ -87,7 +89,7 @@ export default function AboutPage() {
                 className="bg-white rounded-2xl border border-[#e5e5e5] p-8 flex flex-col items-center text-center"
               >
                 <img
-                  src={founder.avatar}
+                  src={founder.avatar.src}
                   alt={founder.name}
                   className="w-24 h-24 rounded-full object-cover mb-4"
                 />

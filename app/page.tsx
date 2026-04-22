@@ -3,7 +3,6 @@ import Hero from "./components/Hero";
 import OldVsNew from "./components/OldVsNew";
 import Features from "./components/Features";
 import WhyMagicalCX from "./components/WhyMagicalCX";
-import HowItWorks from "./components/HowItWorks";
 import FAQ from "./components/FAQ";
 import CTA from "./components/CTA";
 import AskAI from "./components/AskAI";
@@ -18,7 +17,6 @@ export default function Home() {
       <WhyMagicalCX />
       <OldVsNew />
       <Features />
-      <HowItWorks />
       <FAQ />
       <CTA />
       <AskAI />

@@ -15,7 +15,7 @@ export default function AnnouncementBar() {
         <span className="mx-2 text-white/40">|</span>
         40% of paid traffic leave because no one helps them buy.{" "}
         <a
-          href="#cta"
+          href="/#cta"
           className="font-semibold underline underline-offset-2 hover:text-white/80 transition-colors"
         >
           Book a Demo
