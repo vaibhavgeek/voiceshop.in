@@ -83,10 +83,10 @@ export default function FAQ() {
                 Still have questions?
               </p>
               <a
-                href="mailto:founders@speedshop.ai"
+                href="mailto:founders@voiceshop.ai"
                 className="text-sm text-foreground font-medium hover:underline mt-1 inline-block"
               >
-                Contact us at founders@speedshop.ai
+                Contact us at founders@voiceshop.ai
               </a>
             </div>
           </div>

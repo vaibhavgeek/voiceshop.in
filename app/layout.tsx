@@ -14,7 +14,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "SpeedShop AI | India's First AI Voice Salesman",
+  title: "VoiceShop AI | India's First AI Voice Salesman",
   description:
     "Make your website talk & sell more. Arya speaks 12 Indian languages, works 24/7, and converts visitors into customers.",
 };

@@ -16,7 +16,7 @@ export default function Navbar() {
       <nav className="w-full bg-white/90 backdrop-blur-md border-b border-neutral-200 transition-colors duration-300 text-neutral-900">
         <div className="section-container py-1.5 px-4 pr-2 md:px-6 lg:px-4 flex items-center justify-between">
           <a
-            aria-label="SpeedShop AI Home"
+            aria-label="VoiceShop AI Home"
             className="relative inline-flex items-center gap-2 focus:outline-none z-50"
             href="/"
           >
@@ -31,7 +31,7 @@ export default function Navbar() {
                 );
               })}
             </svg>
-            <span className="font-semibold text-base text-neutral-900 tracking-tight">SpeedShop AI</span>
+            <span className="font-semibold text-base text-neutral-900 tracking-tight">VoiceShop AI</span>
           </a>
 
           <div className="hidden md:flex items-center gap-6">

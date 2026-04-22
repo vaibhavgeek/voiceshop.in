@@ -11,7 +11,7 @@ const footerLinks = {
     { label: "Blog", href: "#" },
   ],
   Contact: [
-    { label: "founders@speedshop.ai", href: "mailto:founders@speedshop.ai" },
+    { label: "founders@voiceshop.ai", href: "mailto:founders@voiceshop.ai" },
     { label: "LinkedIn", href: "#" },
     { label: "WhatsApp Support", href: "#" },
   ],
@@ -27,7 +27,7 @@ export default function Footer() {
             {/* Brand */}
             <div className="col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-2 mb-4 sm:mb-0 flex flex-col">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-xl font-medium text-foreground">SpeedShop AI</span>
+                <span className="text-xl font-medium text-foreground">VoiceShop AI</span>
               </div>
               <p className="text-sm text-muted-foreground max-w-sm">
                 India&apos;s first AI voice salesman. Converting website visitors into customers, 24/7.
@@ -64,7 +64,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="section-content-padding py-4 sm:py-6 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 relative z-10">
           <p className="text-sm text-muted-foreground text-center sm:text-left">
-            &copy; 2026 SpeedShop AI. All rights reserved.
+            &copy; 2026 VoiceShop AI. All rights reserved.
           </p>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a>
