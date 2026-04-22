@@ -43,32 +43,36 @@ export default function CTA() {
                 <div className="w-full h-full bg-gradient-to-br from-neutral-800 to-neutral-900 rounded-tl-md flex items-center justify-center">
                   <div className="w-full max-w-sm p-8 space-y-5">
                     <h3 className="text-xl font-medium text-white mb-6">Book Your Demo</h3>
-                    <div>
+                    <div suppressHydrationWarning>
                       <input
                         type="text"
                         placeholder="Your name"
                         className="w-full h-12 rounded-lg border border-white/10 bg-white/5 px-4 text-sm text-white placeholder:text-white/40 focus:border-white/30 focus:outline-none"
+                        suppressHydrationWarning
                       />
                     </div>
-                    <div>
+                    <div suppressHydrationWarning>
                       <input
                         type="tel"
                         placeholder="+91 98765 43210"
                         className="w-full h-12 rounded-lg border border-white/10 bg-white/5 px-4 text-sm text-white placeholder:text-white/40 focus:border-white/30 focus:outline-none"
+                        suppressHydrationWarning
                       />
                     </div>
-                    <div>
+                    <div suppressHydrationWarning>
                       <input
                         type="email"
                         placeholder="you@company.com"
                         className="w-full h-12 rounded-lg border border-white/10 bg-white/5 px-4 text-sm text-white placeholder:text-white/40 focus:border-white/30 focus:outline-none"
+                        suppressHydrationWarning
                       />
                     </div>
-                    <div>
+                    <div suppressHydrationWarning>
                       <input
                         type="url"
                         placeholder="https://yourstore.com"
                         className="w-full h-12 rounded-lg border border-white/10 bg-white/5 px-4 text-sm text-white placeholder:text-white/40 focus:border-white/30 focus:outline-none"
+                        suppressHydrationWarning
                       />
                     </div>
                     <div>

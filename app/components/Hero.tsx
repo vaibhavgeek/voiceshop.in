@@ -29,6 +29,7 @@ export default function Hero() {
                     type="text"
                     placeholder="Enter your website URL"
                     className="w-full h-14 rounded-lg border border-[#e5e5e5] bg-white pl-11 pr-4 text-base transition-all focus:border-black focus:outline-none focus:ring-2 focus:ring-black/10 sm:pr-36"
+                    suppressHydrationWarning
                   />
                   <button
                     type="submit"
