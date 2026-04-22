@@ -3,26 +3,40 @@
 import { useState } from "react";
 import { X } from "lucide-react";
 
-export default function AnnouncementBar() {
-  const [visible, setVisible] = useState(true);
+interface AnnouncementBarProps {
+  show?: boolean;
+  badge?: string;
+  message?: string;
+  linkText?: string;
+  linkHref?: string;
+}
 
-  if (!visible) return null;
+export default function AnnouncementBar({
+  show = true,
+  badge = "🔥 India's First AI Voice Salesman",
+  message = "40% of paid traffic leave because no one helps them buy.",
+  linkText = "Book a Demo",
+  linkHref = "/#cta",
+}: AnnouncementBarProps) {
+  const [dismissed, setDismissed] = useState(false);
+
+  if (!show || dismissed) return null;
 
   return (
     <div className="w-full bg-black text-white text-sm py-2.5 px-4 flex items-center justify-center relative">
       <p className="text-center text-xs sm:text-sm">
-        🔥 <strong>India&apos;s First AI Voice Salesman</strong>
+        <strong>{badge}</strong>
         <span className="mx-2 text-white/40">|</span>
-        40% of paid traffic leave because no one helps them buy.{" "}
+        {message}{" "}
         <a
-          href="/#cta"
+          href={linkHref}
           className="font-semibold underline underline-offset-2 hover:text-white/80 transition-colors"
         >
-          Book a Demo
+          {linkText}
         </a>
       </p>
       <button
-        onClick={() => setVisible(false)}
+        onClick={() => setDismissed(true)}
         className="absolute right-3 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors"
         aria-label="Dismiss announcement"
       >

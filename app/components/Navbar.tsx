@@ -9,8 +9,14 @@ export default function Navbar() {
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 w-full">
-      {/* Announcement bar */}
-      <AnnouncementBar />
+      {/* Announcement bar — uncomment and customise props to re-enable */}
+      {/* <AnnouncementBar
+        show={true}
+        badge="🔥 India's First AI Voice Salesman"
+        message="40% of paid traffic leave because no one helps them buy."
+        linkText="Book a Demo"
+        linkHref="/#cta"
+      /> */}
 
       {/* Main nav */}
       <nav className="w-full bg-white/90 backdrop-blur-md border-b border-neutral-200 transition-colors duration-300 text-neutral-900">
