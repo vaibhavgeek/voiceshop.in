@@ -1,6 +1,50 @@
-import { Globe, ArrowRight, ShieldCheck, Clock, ShoppingCart, TrendingUp } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import { Globe, ArrowRight, ShieldCheck, Clock, ShoppingCart, TrendingUp, Phone } from "lucide-react";
 
 export default function Hero() {
+  const [website, setWebsite] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [errors, setErrors] = useState<{ website?: boolean; mobile?: boolean }>({});
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const missingWebsite = !website.trim();
+    const missingMobile = !mobile.trim();
+
+    if (missingWebsite || missingMobile) {
+      setErrors({ website: missingWebsite, mobile: missingMobile });
+      return;
+    }
+
+    setErrors({});
+    setLoading(true);
+    try {
+      await fetch("/api/demo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ website: website.trim(), mobile: mobile.trim() }),
+      });
+      setSubmitted(true);
+    } catch {
+      // silently succeed from user perspective — email failure shouldn't block them
+      setSubmitted(true);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function missingFieldsMessage() {
+    const missingBoth = errors.website && errors.mobile;
+    if (missingBoth) return "Add missing website & mobile to book your demo";
+    if (errors.website) return "Add missing website to book your demo";
+    if (errors.mobile) return "Add missing mobile to book your demo";
+    return null;
+  }
+
   return (
     <div className="pt-[90px]">
       <div className="section-container border-x flex flex-col items-center justify-center w-full pt-14 sm:pt-16 md:pt-20 pb-0 gap-6 sm:gap-8 md:gap-10">
@@ -20,33 +64,71 @@ export default function Hero() {
 
           <div className="w-full mt-8">
             <div className="w-full max-w-lg mx-auto px-4">
-              <form id="hero-cta-form" className="relative group w-full">
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
-                    <Globe className="h-5 w-5 text-[#737373]/50 group-focus-within:text-black/40 transition-colors" />
+              {submitted ? (
+                <div className="flex flex-col items-center gap-3 py-5">
+                  <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
+                    <ShieldCheck className="w-5 h-5 text-emerald-600" />
                   </div>
-                  <input
-                    type="text"
-                    placeholder="Enter your website URL"
-                    className="w-full h-14 rounded-lg border border-[#e5e5e5] bg-white pl-11 pr-4 text-base transition-all focus:border-black focus:outline-none focus:ring-2 focus:ring-black/10 sm:pr-36"
-                    suppressHydrationWarning
-                  />
+                  <p className="text-[#0a0a0a] font-medium text-base">
+                    Thank You. Our team will reach out to you in 24 hours.
+                  </p>
+                </div>
+              ) : (
+                <form id="hero-cta-form" onSubmit={handleSubmit} noValidate className="flex flex-col gap-3 w-full">
+                  {/* Website URL input */}
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
+                      <Globe className="h-5 w-5 text-[#737373]/50 group-focus-within:text-black/40 transition-colors" />
+                    </div>
+                    <input
+                      type="text"
+                      value={website}
+                      onChange={(e) => { setWebsite(e.target.value); setErrors((prev) => ({ ...prev, website: false })); }}
+                      placeholder="Enter Website"
+                      className={`w-full h-14 rounded-lg border bg-white pl-11 pr-4 text-base transition-all focus:outline-none focus:ring-2 ${
+                        errors.website
+                          ? "border-red-500 focus:border-red-500 focus:ring-red-500/10"
+                          : "border-[#e5e5e5] focus:border-black focus:ring-black/10"
+                      }`}
+                      suppressHydrationWarning
+                    />
+                  </div>
+
+                  {/* Mobile number input */}
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
+                      <Phone className="h-5 w-5 text-[#737373]/50 group-focus-within:text-black/40 transition-colors" />
+                    </div>
+                    <input
+                      type="tel"
+                      value={mobile}
+                      onChange={(e) => { setMobile(e.target.value); setErrors((prev) => ({ ...prev, mobile: false })); }}
+                      placeholder="Enter Mobile"
+                      className={`w-full h-14 rounded-lg border bg-white pl-11 pr-4 text-base transition-all focus:outline-none focus:ring-2 ${
+                        errors.mobile
+                          ? "border-red-500 focus:border-red-500 focus:ring-red-500/10"
+                          : "border-[#e5e5e5] focus:border-black focus:ring-black/10"
+                      }`}
+                      suppressHydrationWarning
+                    />
+                  </div>
+
+                  {/* Error message */}
+                  {missingFieldsMessage() && (
+                    <p className="text-red-500 text-sm text-left -mt-1">{missingFieldsMessage()}</p>
+                  )}
+
+                  {/* Submit button */}
                   <button
                     type="submit"
-                    className="hidden sm:flex absolute right-1.5 top-1.5 h-11 px-5 rounded-md bg-black text-white font-medium text-sm hover:bg-black/80 transition-colors items-center gap-2"
+                    disabled={loading}
+                    className="h-14 w-full rounded-lg bg-black text-white font-medium text-sm hover:bg-black/80 transition-colors flex items-center justify-center gap-2 disabled:opacity-70"
                   >
-                    Try Free Demo
-                    <ArrowRight className="size-4" />
+                    {loading ? "Booking..." : "Try Free Demo"}
+                    {!loading && <ArrowRight className="size-4" />}
                   </button>
-                </div>
-                <button
-                  type="submit"
-                  className="sm:hidden mt-3 h-11 px-6 rounded-lg bg-black text-white font-medium text-sm hover:bg-black/80 transition-colors flex items-center gap-2 w-full justify-center"
-                >
-                  Try Free Demo
-                  <ArrowRight className="size-4" />
-                </button>
-              </form>
+                </form>
+              )}
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-10 mt-5 text-sm text-[#737373]">
