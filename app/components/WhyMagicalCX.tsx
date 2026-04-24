@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { VolumeX, Globe, HelpCircle, AlertTriangle, ChevronLeft, ChevronRight } from "lucide-react";
 
 const funnelSteps = [
@@ -17,7 +17,7 @@ const problems = [
     icon: Globe,
     title: "Your site is not in their language",
     description:
-      "They can’t express what they want. Search, filters, and copy are English-first; they think in Hindi, Tamil, or Bhojpuri. On site they can’t use filters or the size chart with comfort, so they close the tab in the same visit.",
+      "They can't express what they want. Search, filters, and copy are English-first; they think in Hindi, Tamil, or Bhojpuri. On site they can't use filters or the size chart with comfort, so they close the tab in the same visit.",
   },
   {
     icon: VolumeX,
@@ -29,7 +29,7 @@ const problems = [
     icon: HelpCircle,
     title: "They have doubts, but no on-site response",
     description:
-      "On the product page they almost add to cart, but doubts about fabric, size, and quality have no on-site answer. They don’t open chat; they just leave, after you already paid to get them that far.",
+      "On the product page they almost add to cart, but doubts about fabric, size, and quality have no on-site answer. They don't open chat; they just leave, after you already paid to get them that far.",
   },
   {
     icon: AlertTriangle,
@@ -39,16 +39,22 @@ const problems = [
   },
 ];
 
+const INACTIVITY_MS = 60_000;
+
 export default function WhyMagicalCX() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [displayedWord, setDisplayedWord] = useState("");
   const [isErasing, setIsErasing] = useState(false);
   const [boxVisible, setBoxVisible] = useState(true);
   const [nextIndex, setNextIndex] = useState<number | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
 
+  const inactivityTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const fullWord = silentWords[activeIndex];
 
   useEffect(() => {
+    if (isPaused) return;
+
     let timeout: ReturnType<typeof setTimeout>;
 
     if (!isErasing) {
@@ -60,7 +66,7 @@ export default function WhyMagicalCX() {
         timeout = setTimeout(() => {
           setBoxVisible(false);
           setIsErasing(true);
-        }, 2000);
+        }, 3500);
       }
     } else {
       if (displayedWord.length > 0) {
@@ -68,7 +74,8 @@ export default function WhyMagicalCX() {
           setDisplayedWord(displayedWord.slice(0, -1));
         }, 40);
       } else {
-        const target = nextIndex !== null ? nextIndex : (activeIndex + 1) % silentWords.length;
+        const target =
+          nextIndex !== null ? nextIndex : (activeIndex + 1) % silentWords.length;
         setNextIndex(null);
         setActiveIndex(target);
         setIsErasing(false);
@@ -77,15 +84,30 @@ export default function WhyMagicalCX() {
     }
 
     return () => clearTimeout(timeout);
-  }, [isErasing, displayedWord, fullWord, activeIndex, nextIndex]);
+  }, [isPaused, isErasing, displayedWord, fullWord, activeIndex, nextIndex]);
+
+  useEffect(() => {
+    return () => {
+      if (inactivityTimer.current) clearTimeout(inactivityTimer.current);
+    };
+  }, []);
+
+  const scheduleResume = useCallback(() => {
+    if (inactivityTimer.current) clearTimeout(inactivityTimer.current);
+    inactivityTimer.current = setTimeout(() => setIsPaused(false), INACTIVITY_MS);
+  }, []);
 
   const goTo = useCallback(
     (index: number) => {
-      setBoxVisible(false);
-      setIsErasing(true);
-      setNextIndex(index);
+      setIsPaused(true);
+      setActiveIndex(index);
+      setDisplayedWord(silentWords[index]);
+      setIsErasing(false);
+      setNextIndex(null);
+      setBoxVisible(true);
+      scheduleResume();
     },
-    []
+    [scheduleResume]
   );
 
   const goNext = useCallback(
@@ -109,15 +131,17 @@ export default function WhyMagicalCX() {
         {/* Header */}
         <div className="max-w-5xl mx-auto text-center mb-16 section-container-padding">
           <h2 className="section-heading">
-            <span className="text-muted-foreground">
+            <span className="block text-foreground font-normal">
               You pay &#8377;100+ on ads to get users on your website.
-            </span>{" "}
-            <span className="font-bold">But 90%+ don&apos;t buy!</span>
+            </span>
+            <span className="block font-bold text-[2.15rem] md:text-[2.6rem] mt-2">
+              But 90%+ don&apos;t buy!
+            </span>
           </h2>
         </div>
 
         {/* Funnel */}
-        <div className="max-w-3xl mx-auto mb-12 section-content-padding">
+        <div className="max-w-3xl mx-auto section-content-padding">
           <div className="flex items-center text-center">
             {funnelSteps.map((step, i) => {
               const isLast = i === funnelSteps.length - 1;
@@ -168,27 +192,59 @@ export default function WhyMagicalCX() {
           </div>
         </div>
 
-        {/* Why? contrast box */}
-        <div className="max-w-3xl mx-auto mb-20 section-content-padding flex justify-center">
-          <div className="bg-foreground rounded-lg px-10 py-4">
-            <span className="text-xl font-semibold text-background tracking-tight">
+        {/* Why? connector — vertical line → arrow → pill → line → arrow */}
+        <div className="flex flex-col items-center mb-14">
+          <div className="w-px h-10 bg-border" />
+          <svg
+            width="12"
+            height="7"
+            viewBox="0 0 12 7"
+            fill="currentColor"
+            className="text-border -mt-px"
+          >
+            <path d="M6 7L0 0h12z" />
+          </svg>
+          <div className="bg-foreground rounded-full px-8 py-3 my-3">
+            <span className="font-semibold text-background text-base tracking-tight">
               Why?
             </span>
           </div>
+          <div className="w-px h-10 bg-border" />
+          <svg
+            width="12"
+            height="7"
+            viewBox="0 0 12 7"
+            fill="currentColor"
+            className="text-border -mt-px"
+          >
+            <path d="M6 7L0 0h12z" />
+          </svg>
         </div>
 
-        {/* Silent XYZ */}
+        {/* Your Store Has Silent XYZ */}
         <div className="max-w-5xl mx-auto text-center mb-10 section-content-padding">
-          <p className="text-2xl md:text-3xl font-medium text-foreground tracking-tight">
-            Your store has silent{" "}
-            <span className="font-bold">
+          <p
+            className="font-medium text-foreground tracking-tight leading-tight"
+            style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)" }}
+          >
+            Your Store Has{" "}
+            <span
+              className="font-bold"
+              style={{ fontSize: "1.1em" }}
+            >
+              Silent
+            </span>{" "}
+            <span
+              className="font-bold"
+              style={{ fontSize: "1.1em" }}
+            >
               {displayedWord}
-              <span className="animate-cursor-blink inline-block w-[2px] h-[1em] bg-foreground align-middle ml-0.5 translate-y-[-1px]" />
+              <span className="animate-cursor-blink inline-block w-[2px] h-[0.85em] bg-foreground align-middle ml-0.5" />
             </span>
           </p>
         </div>
 
-        {/* Problem box (animated) */}
+        {/* Problem box */}
         <div className="max-w-3xl mx-auto section-content-padding">
           <div
             className="transition-opacity duration-300"
