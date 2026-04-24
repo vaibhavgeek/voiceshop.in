@@ -11,14 +11,27 @@ export default function Hero() {
           >
             Your Shop Visitors Need Help
             <br />
-            <span className="italic">Add Talking AI Salesmen &amp; Grow Sales</span>
+            <span className="font-bold">Add Talking AI Salesmen &amp; Grow Sales</span>
           </h1>
-          <p className="text-lg leading-relaxed text-[#737373] max-w-xl mx-auto">
-            40% of paid traffic leave because no one helps them buy.
-            Arya speaks 12 Indian languages, works 24/7, and converts visitors into customers.
+          <p className="text-lg leading-relaxed text-[#737373] max-w-md mx-auto text-center">
+            40% of paid traffic leave because no one helps them buy. Arya speaks 12 Indian languages, works 24/7, and converts visitors into customers.
           </p>
 
           <div className="w-full mt-8">
+            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-10 mb-6 text-base text-[#737373]">
+              <span className="flex items-center gap-2">
+                <Clock className="w-5 h-5 text-emerald-500" />
+                <span className="font-semibold text-[#0a0a0a]">24/7</span> Live
+              </span>
+              <span className="flex items-center gap-2">
+                <Globe className="w-5 h-5 text-blue-500" />
+                <span className="font-semibold text-[#0a0a0a]">15+</span> Indian Languages
+              </span>
+              <span className="flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-yellow-500" />
+                <span className="font-semibold text-[#0a0a0a]">₹0</span> charge for 14-day
+              </span>
+            </div>
             <div className="w-full max-w-lg mx-auto px-4">
               <form id="hero-cta-form" className="relative group w-full">
                 <div className="relative">
@@ -47,21 +60,6 @@ export default function Hero() {
                   <ArrowRight className="size-4" />
                 </button>
               </form>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-10 mt-5 text-sm text-[#737373]">
-              <span className="flex items-center gap-1.5">
-                <Clock className="w-4 h-4 text-emerald-500" />
-                <span className="font-medium text-[#0a0a0a]">24/7</span> Live
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Globe className="w-4 h-4 text-blue-500" />
-                <span className="font-medium text-[#0a0a0a]">15+</span> Indian Languages
-              </span>
-              <span className="flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-yellow-500" />
-                <span className="font-medium text-[#0a0a0a]">0</span> charge for 14-day
-              </span>
             </div>
           </div>
         </div>
