@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Check, Globe, Phone, ShieldCheck, X } from "lucide-react";
+import { Check, ChevronDown, Globe, Phone, ShieldCheck, X } from "lucide-react";
 
 type Region = "IN" | "US";
 
@@ -135,6 +135,130 @@ const usPlans = [
 
 function getCurrencySymbol(region: Region) {
   return region === "IN" ? "₹" : "$";
+}
+
+const faqs = [
+  {
+    q: "What happens after the 14-day free trial?",
+    a: (
+      <div className="space-y-3">
+        <p>After 14 days, you can choose a plan based on your traffic and conversation needs. No credit card required upfront. No auto-charge. The trial is fully unlocked with no restrictions — you get the complete experience.</p>
+        <p>If you see results, you can buy a plan directly from our pricing page and credits will be activated in your store. You can also:</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Buy extra conversation credits anytime</li>
+          <li>Enable auto-pay when credits hit a certain threshold</li>
+        </ul>
+      </div>
+    ),
+  },
+  {
+    q: "Is there a minimum contract period?",
+    a: "Plans are billed monthly or quarterly (with 15% discount on quarterly). No lock-in. You can also buy credits directly with a minimum of 100 conversations.",
+  },
+  {
+    q: "Do you charge per conversation or per visitor?",
+    a: "We charge per conversation. 1 conversation = 1 user's entire voice session where they talk at least 2 times — this avoids counting spam or accidental clicks.",
+  },
+  {
+    q: 'What exactly counts as a "conversation credit"?',
+    a: (
+      <div className="space-y-3">
+        <p>Whenever a user talks to Arya 2 or more times in the same session, it&apos;s considered 1 conversation and 1 credit is deducted.</p>
+        <p>Examples:</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>User talks for 30 seconds or 5 minutes → Still 1 credit (as long as they spoke 2+ times)</li>
+          <li>User clicks Arya but only says something once → No credit used</li>
+          <li>User comes back the next day and talks again → New session, new credit (if they talk 2+ times)</li>
+        </ul>
+      </div>
+    ),
+  },
+  {
+    q: 'Is the free trial really "no credit card required"?',
+    a: "Yes. You don't need to add any payment information during the trial. On day 15, if you haven't purchased a plan, Arya simply stops working. No charges, no surprise billing.",
+  },
+  {
+    q: "What's the difference between your plans?",
+    a: (
+      <div className="space-y-3">
+        <p>All plans include the same complete Arya experience:</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>All 15+ Indian languages</li>
+          <li>Full Aryabhatta dashboard with insights</li>
+          <li>Session replay and conversion analytics</li>
+          <li>Missing product recommendations</li>
+          <li>WhatsApp lead capture for price objections</li>
+        </ul>
+        <p>The only difference is conversation volume — choose based on how much traffic your store gets.</p>
+      </div>
+    ),
+  },
+  {
+    q: "Can I upgrade or downgrade mid-month?",
+    a: "Yes. You can upgrade anytime and credits are added immediately to your account. If you're on a monthly/quarterly plan and want to switch, reach out to us and we'll adjust your billing accordingly.",
+  },
+  {
+    q: "Do you offer custom/enterprise plans?",
+    a: (
+      <div className="space-y-3">
+        <p>Yes. For high-traffic brands (100K+ monthly visitors) or those needing custom features, we offer enterprise pricing with:</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Volume discounts</li>
+          <li>Annual contracts</li>
+          <li>Dedicated support</li>
+          <li>Custom integrations</li>
+        </ul>
+        <p>Contact us at founders@voiceshop.ai to discuss enterprise options.</p>
+      </div>
+    ),
+  },
+  {
+    q: "Can I get an invoice/GST receipt?",
+    a: "Yes. All Indian businesses receive GST-compliant invoices automatically after payment. You can download them from your dashboard or request via email.",
+  },
+];
+
+function FaqSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  return (
+    <div className="mt-20">
+      <div className="text-center mb-12">
+        <h2
+          className="font-stix font-normal text-[#0a0a0a] mb-3"
+          style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)" }}
+        >
+          Pricing FAQs
+        </h2>
+        <p className="text-[#737373] text-base">Common questions about our pricing and plans</p>
+      </div>
+
+      <div className="max-w-3xl mx-auto flex flex-col gap-3">
+        {faqs.map((faq, i) => (
+          <div
+            key={i}
+            className="bg-white border border-[#e5e5e5] rounded-xl overflow-hidden"
+          >
+            <button
+              onClick={() => setOpenIndex(openIndex === i ? null : i)}
+              className="cursor-pointer w-full flex items-center justify-between px-6 py-5 text-left gap-4"
+            >
+              <span className="text-base font-medium text-[#0a0a0a]">{faq.q}</span>
+              <ChevronDown
+                size={18}
+                className={`flex-shrink-0 text-[#737373] transition-transform duration-200 ${openIndex === i ? "rotate-180" : ""}`}
+              />
+            </button>
+            {openIndex === i && (
+              <div className="px-6 pb-5 text-sm text-[#737373] leading-relaxed border-t border-[#f0f0f0] pt-4">
+                {faq.a}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 function DemoModal({ onClose }: { onClose: () => void }) {
@@ -323,13 +447,13 @@ export default function Pricing() {
       <div className="section-container section-container-padding">
         <div className="text-center mb-12">
           <h2
-            className="font-stix font-normal text-[#0a0a0a] mb-4"
+            className="font-stix font-normal text-[#0a0a0a] mb-3"
             style={{ fontSize: "clamp(1.75rem, 4.5vw, 3rem)" }}
           >
-            From free trial to enterprise
+            Start For Free, See Sales Grow, Then Buy
           </h2>
           <p className="section-subheadline">
-            Designed for every stage of your journey. Start for Free today.
+            No Credit Cards Required For Free Trial
           </p>
         </div>
 
@@ -443,6 +567,8 @@ export default function Pricing() {
             </div>
           ))}
         </div>
+
+        <FaqSection />
       </div>
     </section>
   );
