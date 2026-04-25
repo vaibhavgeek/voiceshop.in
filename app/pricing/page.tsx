@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Check } from "lucide-react";
+import { Check, Globe, Phone, ShieldCheck, X } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -147,9 +147,142 @@ function getCurrencySymbol(region: Region) {
   return region === "IN" ? "₹" : "$";
 }
 
+function DemoModal({ onClose }: { onClose: () => void }) {
+  const [website, setWebsite] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [errors, setErrors] = useState<{ website?: boolean; mobile?: boolean }>({});
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const missingWebsite = !website.trim();
+    const missingMobile = !mobile.trim();
+
+    if (missingWebsite || missingMobile) {
+      setErrors({ website: missingWebsite, mobile: missingMobile });
+      return;
+    }
+
+    setErrors({});
+    setLoading(true);
+    try {
+      await fetch("/api/demo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ website: website.trim(), mobile: mobile.trim() }),
+      });
+      setSubmitted(true);
+    } catch {
+      setSubmitted(true);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function missingFieldsMessage() {
+    const missingBoth = errors.website && errors.mobile;
+    if (missingBoth) return "Add missing website & mobile to book your demo";
+    if (errors.website) return "Add missing website to book your demo";
+    if (errors.mobile) return "Add missing mobile to book your demo";
+    return null;
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+    >
+      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 relative">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-[#737373] hover:text-[#0a0a0a] transition-colors cursor-pointer"
+          aria-label="Close"
+        >
+          <X size={20} />
+        </button>
+
+        {submitted ? (
+          <div className="flex flex-col items-center gap-4 py-6">
+            <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
+              <ShieldCheck className="w-6 h-6 text-emerald-600" />
+            </div>
+            <p className="text-[#0a0a0a] font-medium text-base text-center">
+              Thank You. Our team will reach out to you in 24 hours.
+            </p>
+            <button
+              onClick={onClose}
+              className="mt-2 text-sm text-[#737373] hover:text-[#0a0a0a] underline cursor-pointer"
+            >
+              Close
+            </button>
+          </div>
+        ) : (
+          <>
+            <h2 className="text-xl font-semibold text-[#0a0a0a] mb-2">Book a Demo</h2>
+            <p className="text-sm text-[#737373] mb-6">
+              Enter your details and our team will reach out within 24 hours.
+            </p>
+
+            <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-3">
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
+                  <Globe className="h-5 w-5 text-[#737373]/50 group-focus-within:text-black/40 transition-colors" />
+                </div>
+                <input
+                  type="text"
+                  value={website}
+                  onChange={(e) => { setWebsite(e.target.value); setErrors((prev) => ({ ...prev, website: false })); }}
+                  placeholder="Website URL"
+                  className={`w-full h-14 rounded-lg border bg-white pl-11 pr-4 text-base transition-all focus:outline-none focus:ring-2 ${
+                    errors.website
+                      ? "border-red-500 focus:border-red-500 focus:ring-red-500/10"
+                      : "border-[#e5e5e5] focus:border-black focus:ring-black/10"
+                  }`}
+                />
+              </div>
+
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
+                  <Phone className="h-5 w-5 text-[#737373]/50 group-focus-within:text-black/40 transition-colors" />
+                </div>
+                <input
+                  type="tel"
+                  value={mobile}
+                  onChange={(e) => { setMobile(e.target.value); setErrors((prev) => ({ ...prev, mobile: false })); }}
+                  placeholder="Mobile No."
+                  className={`w-full h-14 rounded-lg border bg-white pl-11 pr-4 text-base transition-all focus:outline-none focus:ring-2 ${
+                    errors.mobile
+                      ? "border-red-500 focus:border-red-500 focus:ring-red-500/10"
+                      : "border-[#e5e5e5] focus:border-black focus:ring-black/10"
+                  }`}
+                />
+              </div>
+
+              {missingFieldsMessage() && (
+                <p className="text-red-500 text-sm -mt-1">{missingFieldsMessage()}</p>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="h-14 w-full rounded-lg bg-black text-white font-medium text-sm hover:bg-black/80 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 cursor-pointer mt-1"
+              >
+                {loading ? "Booking..." : "Book Demo"}
+              </button>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function PricingPage() {
   const [isQuarterly, setIsQuarterly] = useState(true);
   const [region, setRegion] = useState<Region | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetch("https://ipapi.co/json/")
@@ -173,6 +306,8 @@ export default function PricingPage() {
   return (
     <div className="bg-[#f8f8f8] min-h-screen">
       <Navbar />
+
+      {showModal && <DemoModal onClose={() => setShowModal(false)} />}
 
       <section className="pt-32 pb-16 md:pt-40 md:pb-20">
         <div className="section-container section-container-padding text-center">
@@ -252,8 +387,8 @@ export default function PricingPage() {
                       {currency}
                       {region === "IN"
                         ? isQuarterly
-                          ? plan.quarterlyPrice
-                          : plan.monthlyPrice
+                          ? plan.monthlyPrice
+                          : plan.quarterlyPrice
                         : plan.monthlyPrice}
                     </span>
                   </div>
@@ -262,7 +397,7 @@ export default function PricingPage() {
                 <p className="text-sm text-[#737373] mb-1">
                   {region === "IN"
                     ? isQuarterly
-                      ? "Per month, billed quarterly"
+                      ? "Per quarter, billed quarterly"
                       : "Per month, billed monthly"
                     : "Per month"}
                 </p>
@@ -294,6 +429,7 @@ export default function PricingPage() {
                 </ul>
 
                 <button
+                  onClick={() => setShowModal(true)}
                   className={`cursor-pointer w-full rounded-lg py-3 text-sm font-medium transition-all duration-200 ${
                     plan.highlighted
                       ? "bg-black text-white hover:bg-black/80"
