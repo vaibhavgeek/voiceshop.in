@@ -12,11 +12,13 @@ const MAX_CONV = 10000;
 const CONV_STEP = 100;
 const USD_RATE = 0.1;
 const INR_RATE = 5;
+const QUARTERLY_DISCOUNT = 0.8; // 20% off
 
 const PLAN_META = [
   {
     name: "Free Trial",
-    tagline: "First 14-days are on us to test results on sales",
+    taglineIN: "First 14-days are on us to test results on sales",
+    taglineUS: "First 14-days are on us to test results on sales",
     cta: "Start Free Trial",
     highlighted: false,
     isFree: true,
@@ -52,46 +54,65 @@ const PLAN_META = [
 ] as const;
 
 const FEATURE_ROWS_IN = [
-  { label: "14-day free trial",           included: [true,  false, false, false] },
-  { label: "100+ Voices & Languages",     included: [true,  true,  true,  true ] },
-  { label: "AI Builder",                  included: [true,  false, false, false] },
-  { label: "Email + SMS notification",    included: [true,  true,  true,  true ] },
-  { label: "Aryabhatta Insights",         included: [false, true,  true,  true ] },
-  { label: "Premium voices",              included: [false, true,  true,  true ] },
-  { label: "Spam filtering",              included: [false, true,  true,  true ] },
-  { label: "Advanced API Integrations",   included: [false, false, true,  true ] },
-  { label: "CRM integrations",            included: [false, false, true,  true ] },
-  { label: "Slack Channel Support",       included: [false, false, false, true ] },
+  { label: "14-day free trial",            included: [true,  false, false, false] },
+  { label: "100+ Voices & Languages",      included: [true,  true,  true,  true ] },
+  { label: "AI Builder",                   included: [true,  false, false, false] },
+  { label: "Email + SMS notification",     included: [true,  true,  true,  true ] },
+  { label: "Aryabhatta Insights",          included: [false, true,  true,  true ] },
+  { label: "Premium voices",               included: [false, true,  true,  true ] },
+  { label: "Spam filtering",               included: [false, true,  true,  true ] },
+  { label: "Advanced API Integrations",    included: [false, false, true,  true ] },
+  { label: "CRM integrations",             included: [false, false, true,  true ] },
+  { label: "Slack Channel Support",        included: [false, false, false, true ] },
   { label: "₹25/conversation over 3 min", included: [false, false, false, true ] },
 ];
 
 const FEATURE_ROWS_US = [
-  { label: "14-day free trial",           included: [true,  false, false, false] },
-  { label: "100+ Voices & Languages",     included: [true,  true,  true,  true ] },
-  { label: "AI Builder",                  included: [true,  false, false, false] },
-  { label: "Email + SMS notification",    included: [true,  true,  true,  true ] },
-  { label: "AI Insights",                 included: [false, true,  true,  true ] },
-  { label: "Premium voices",              included: [false, true,  true,  true ] },
-  { label: "Spam filtering",              included: [false, true,  true,  true ] },
-  { label: "Advanced API Integrations",   included: [false, false, true,  true ] },
-  { label: "CRM integrations",            included: [false, false, true,  true ] },
-  { label: "Slack Channel Support",       included: [false, false, false, true ] },
-  { label: "Custom overage pricing",      included: [false, false, false, true ] },
+  { label: "14-day free trial",          included: [true,  false, false, false] },
+  { label: "100+ Voices & Languages",    included: [true,  true,  true,  true ] },
+  { label: "AI Builder",                 included: [true,  false, false, false] },
+  { label: "Email + SMS notification",   included: [true,  true,  true,  true ] },
+  { label: "AI Insights",                included: [false, true,  true,  true ] },
+  { label: "Premium voices",             included: [false, true,  true,  true ] },
+  { label: "Spam filtering",             included: [false, true,  true,  true ] },
+  { label: "Advanced API Integrations",  included: [false, false, true,  true ] },
+  { label: "CRM integrations",           included: [false, false, true,  true ] },
+  { label: "Slack Channel Support",      included: [false, false, false, true ] },
+  { label: "Custom overage pricing",     included: [false, false, false, true ] },
 ];
 
-function formatSliderPrice(conversations: number, region: Region): string {
-  if (region === "IN") {
-    return `₹${(conversations * INR_RATE).toLocaleString("en-IN")}`;
-  }
-  return `$${(conversations * USD_RATE).toFixed(0)}`;
+// Base monthly price before any billing-period discount
+function baseMonthly(conversations: number, region: Region): number {
+  return conversations * (region === "IN" ? INR_RATE : USD_RATE);
 }
 
-function planTagline(plan: (typeof PLAN_META)[number], region: Region): string {
-  if (plan.isFree) return plan.tagline;
-  return region === "IN" ? plan.taglineIN : plan.taglineUS;
+// Effective monthly-equivalent price given billing period
+function effectiveMonthly(conversations: number, region: Region, isQuarterly: boolean): number {
+  return baseMonthly(conversations, region) * (isQuarterly ? QUARTERLY_DISCOUNT : 1);
+}
+
+// Total charged per quarter (3 months at discounted rate)
+function quarterlyTotal(conversations: number, region: Region): number {
+  return effectiveMonthly(conversations, region, true) * 3;
+}
+
+function formatCurrency(amount: number, region: Region): string {
+  if (region === "IN") return `₹${Math.round(amount).toLocaleString("en-IN")}`;
+  return `$${Math.round(amount)}`;
+}
+
+// Effective per-conversation rate shown in the slider subtitle
+function effectiveRate(region: Region, isQuarterly: boolean): string {
+  if (region === "IN") {
+    const r = INR_RATE * (isQuarterly ? QUARTERLY_DISCOUNT : 1);
+    return `₹${r}/conv`;
+  }
+  const r = USD_RATE * (isQuarterly ? QUARTERLY_DISCOUNT : 1);
+  return `$${r.toFixed(2)}/conv`;
 }
 
 export default function PricingPage() {
+  const [isQuarterly, setIsQuarterly] = useState(false);
   const [region, setRegion] = useState<Region | null>(null);
   const [conversations, setConversations] = useState(MIN_CONV);
 
@@ -143,8 +164,9 @@ export default function PricingPage() {
             </div>
           ) : (
             <>
-              {/* Currency + billing toggles */}
+              {/* Currency toggle + billing period toggle */}
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+                {/* Currency */}
                 <div className="inline-flex rounded-full border border-[#e5e5e5] bg-white p-1">
                   <button
                     onClick={() => setRegion("IN")}
@@ -168,6 +190,38 @@ export default function PricingPage() {
                   </button>
                 </div>
 
+                {/* Billing period */}
+                <div className="inline-flex rounded-full border border-[#e5e5e5] bg-white p-1">
+                  <button
+                    onClick={() => setIsQuarterly(false)}
+                    className={`cursor-pointer rounded-full px-6 py-2 text-sm font-medium transition-all duration-200 ${
+                      !isQuarterly
+                        ? "bg-black text-white"
+                        : "text-[#737373] hover:text-[#0a0a0a]"
+                    }`}
+                  >
+                    Monthly
+                  </button>
+                  <button
+                    onClick={() => setIsQuarterly(true)}
+                    className={`cursor-pointer rounded-full px-5 py-2 text-sm font-medium transition-all duration-200 flex items-center gap-1.5 ${
+                      isQuarterly
+                        ? "bg-black text-white"
+                        : "text-[#737373] hover:text-[#0a0a0a]"
+                    }`}
+                  >
+                    Quarterly
+                    <span
+                      className={`text-xs rounded-full px-1.5 py-0.5 font-semibold ${
+                        isQuarterly
+                          ? "bg-white/20 text-white"
+                          : "bg-[#e8f5e8] text-[#2d7a2d]"
+                      }`}
+                    >
+                      −20%
+                    </span>
+                  </button>
+                </div>
               </div>
 
               {/* Conversation pricing slider */}
@@ -178,9 +232,13 @@ export default function PricingPage() {
                       Pay per conversation
                     </h2>
                     <p className="text-sm text-[#737373] mb-8">
-                      {region === "IN"
-                        ? "₹5 per conversation · starts at ₹2,500/month"
-                        : "$0.10 per conversation · starts at $50/month"}
+                      {effectiveRate(region, isQuarterly)} ·{" "}
+                      {isQuarterly ? "billed every 3 months" : "billed monthly"}
+                      {isQuarterly && (
+                        <span className="ml-2 inline-flex items-center rounded-full bg-[#e8f5e8] px-2 py-0.5 text-xs font-semibold text-[#2d7a2d]">
+                          Save 20% vs monthly
+                        </span>
+                      )}
                     </p>
 
                     <div className="flex items-center justify-between mb-3">
@@ -211,17 +269,25 @@ export default function PricingPage() {
                     </div>
                   </div>
 
-                  <div className="md:w-48 flex flex-col md:items-end">
+                  <div className="md:w-56 flex flex-col md:items-end">
                     <div className="flex items-baseline gap-1 mb-1">
                       <span className="text-5xl font-bold text-[#0a0a0a]">
-                        {formatSliderPrice(conversations, region)}
+                        {formatCurrency(effectiveMonthly(conversations, region, isQuarterly), region)}
                       </span>
                     </div>
-                    <p className="text-sm text-[#737373] mb-1">per month</p>
-                    <p className="text-xs text-[#737373] mb-5">
-                      {conversations.toLocaleString()} conv ×{" "}
-                      {region === "IN" ? "₹5" : "$0.10"}
+                    <p className="text-sm text-[#737373] mb-1">
+                      {isQuarterly ? "per month, billed quarterly" : "per month"}
                     </p>
+                    {isQuarterly ? (
+                      <p className="text-xs text-[#2d7a2d] font-medium mb-5">
+                        {formatCurrency(quarterlyTotal(conversations, region), region)} billed every 3 months
+                      </p>
+                    ) : (
+                      <p className="text-xs text-[#737373] mb-5">
+                        {conversations.toLocaleString()} conv ×{" "}
+                        {region === "IN" ? "₹5" : "$0.10"}
+                      </p>
+                    )}
                     <button className="cursor-pointer rounded-lg px-6 py-3 text-sm font-medium bg-black text-white hover:bg-black/80 transition-all duration-200">
                       Get Started
                     </button>
@@ -232,7 +298,7 @@ export default function PricingPage() {
               {/* Pricing comparison table */}
               <div className="overflow-x-auto rounded-2xl border border-[#e5e5e5]">
                 <table className="w-full min-w-[680px] bg-white border-collapse">
-                  {/* Plan header row */}
+                  {/* Plan name headers */}
                   <thead>
                     <tr className="border-b border-[#e5e5e5]">
                       <th className="p-5 w-44 border-r border-[#e5e5e5]" />
@@ -259,35 +325,57 @@ export default function PricingPage() {
                   </thead>
 
                   <tbody>
-                    {/* Price row — updates with slider */}
+                    {/* Price row — updates with slider and billing period */}
                     <tr className="border-b border-[#e5e5e5]">
-                      <td className="p-5 border-r border-[#e5e5e5] text-xs font-medium text-[#737373] uppercase tracking-wide">
-                        Monthly price
+                      <td className="p-5 border-r border-[#e5e5e5] text-xs font-medium text-[#737373] uppercase tracking-wide align-top pt-6">
+                        {isQuarterly ? "Quarterly price" : "Monthly price"}
                       </td>
                       {PLAN_META.map((plan, i) => (
                         <td
                           key={plan.name}
                           className={cellBase(plan.highlighted, i === PLAN_META.length - 1)}
                         >
-                          <div
-                            className={`text-3xl font-bold ${
-                              plan.highlighted ? "text-[#2d7a2d]" : "text-[#0a0a0a]"
-                            }`}
-                          >
-                            {plan.isFree
-                              ? region === "IN" ? "₹0" : "$0"
-                              : formatSliderPrice(conversations, region)}
-                          </div>
-                          <div className="text-xs text-[#737373] mt-1">
-                            {plan.isFree
-                              ? "14-day trial"
-                              : `${conversations.toLocaleString()} conv/mo`}
-                          </div>
+                          {plan.isFree ? (
+                            <>
+                              <div className="text-3xl font-bold text-[#0a0a0a]">
+                                {region === "IN" ? "₹0" : "$0"}
+                              </div>
+                              <div className="text-xs text-[#737373] mt-1">
+                                14-day trial
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div
+                                className={`text-3xl font-bold ${
+                                  plan.highlighted ? "text-[#2d7a2d]" : "text-[#0a0a0a]"
+                                }`}
+                              >
+                                {formatCurrency(
+                                  effectiveMonthly(conversations, region, isQuarterly),
+                                  region
+                                )}
+                              </div>
+                              <div className="text-xs text-[#737373] mt-1">
+                                per month
+                                {isQuarterly ? ", billed quarterly" : ""}
+                              </div>
+                              {isQuarterly && (
+                                <div className="text-xs text-[#2d7a2d] font-medium mt-0.5">
+                                  {formatCurrency(quarterlyTotal(conversations, region), region)}{" "}
+                                  / quarter
+                                </div>
+                              )}
+                              <div className="text-xs text-[#737373] mt-0.5">
+                                {conversations.toLocaleString()} conv/mo
+                              </div>
+                            </>
+                          )}
                         </td>
                       ))}
                     </tr>
 
-                    {/* Tagline row */}
+                    {/* Best for row */}
                     <tr className="border-b border-[#e5e5e5]">
                       <td className="p-5 border-r border-[#e5e5e5] text-xs font-medium text-[#737373] uppercase tracking-wide">
                         Best for
@@ -297,7 +385,7 @@ export default function PricingPage() {
                           key={plan.name}
                           className={`${cellBase(plan.highlighted, i === PLAN_META.length - 1)} text-sm text-[#737373]`}
                         >
-                          {planTagline(plan, region)}
+                          {region === "IN" ? plan.taglineIN : plan.taglineUS}
                         </td>
                       ))}
                     </tr>
@@ -327,11 +415,7 @@ export default function PricingPage() {
                     {featureRows.map((row, rowIdx) => (
                       <tr
                         key={row.label}
-                        className={
-                          rowIdx < featureRows.length - 1
-                            ? "border-b border-[#e5e5e5]"
-                            : ""
-                        }
+                        className={rowIdx < featureRows.length - 1 ? "border-b border-[#e5e5e5]" : ""}
                       >
                         <td className="p-5 border-r border-[#e5e5e5] text-sm text-[#737373]">
                           {row.label}
@@ -354,9 +438,7 @@ export default function PricingPage() {
                                 size={18}
                               />
                             ) : (
-                              <span className="text-[#d4d4d4] text-lg leading-none">
-                                —
-                              </span>
+                              <span className="text-[#d4d4d4] text-lg leading-none">—</span>
                             )}
                           </td>
                         ))}
