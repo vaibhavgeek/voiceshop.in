@@ -5,6 +5,12 @@ import { Check } from "lucide-react";
 
 type Region = "IN" | "US";
 
+const MIN_CONV = 500;
+const MAX_CONV = 10000;
+const CONV_STEP = 100;
+const USD_RATE = 0.1;
+const INR_RATE = 5;
+
 const inPlans = [
   {
     name: "Free Trial",
@@ -137,9 +143,17 @@ function getCurrencySymbol(region: Region) {
   return region === "IN" ? "₹" : "$";
 }
 
+function formatSliderPrice(conversations: number, region: Region): string {
+  if (region === "IN") {
+    return `₹${(conversations * INR_RATE).toLocaleString("en-IN")}`;
+  }
+  return `$${(conversations * USD_RATE).toFixed(0)}`;
+}
+
 export default function Pricing() {
   const [isQuarterly, setIsQuarterly] = useState(true);
   const [region, setRegion] = useState<Region | null>(null);
+  const [conversations, setConversations] = useState(MIN_CONV);
 
   useEffect(() => {
     fetch("https://ipapi.co/json/")
@@ -182,6 +196,8 @@ export default function Pricing() {
 
   const plans = region === "IN" ? inPlans : usPlans;
   const currency = getCurrencySymbol(region);
+  const sliderFillPct =
+    ((conversations - MIN_CONV) / (MAX_CONV - MIN_CONV)) * 100;
 
   return (
     <section id="pricing" className="py-16 md:py-24">
@@ -198,8 +214,32 @@ export default function Pricing() {
           </p>
         </div>
 
-        {region === "IN" && (
-          <div className="flex justify-center mb-12">
+        {/* Currency + billing toggles */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+          <div className="inline-flex rounded-full border border-[#e5e5e5] bg-white p-1">
+            <button
+              onClick={() => setRegion("IN")}
+              className={`cursor-pointer rounded-full px-6 py-2 text-sm font-medium transition-all duration-200 ${
+                region === "IN"
+                  ? "bg-black text-white"
+                  : "text-[#737373] hover:text-[#0a0a0a]"
+              }`}
+            >
+              ₹ INR
+            </button>
+            <button
+              onClick={() => setRegion("US")}
+              className={`cursor-pointer rounded-full px-6 py-2 text-sm font-medium transition-all duration-200 ${
+                region === "US"
+                  ? "bg-black text-white"
+                  : "text-[#737373] hover:text-[#0a0a0a]"
+              }`}
+            >
+              $ USD
+            </button>
+          </div>
+
+          {region === "IN" && (
             <div className="inline-flex rounded-full border border-[#e5e5e5] bg-white p-1">
               <button
                 onClick={() => setIsQuarterly(false)}
@@ -222,9 +262,69 @@ export default function Pricing() {
                 Quarterly
               </button>
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
+        {/* Conversation pricing slider */}
+        <div className="mb-12 bg-white border border-[#e5e5e5] rounded-2xl p-8">
+          <div className="flex flex-col md:flex-row md:items-center gap-8">
+            <div className="flex-1">
+              <h3 className="text-xl font-semibold text-[#0a0a0a] mb-1">
+                Pay per conversation
+              </h3>
+              <p className="text-sm text-[#737373] mb-8">
+                {region === "IN"
+                  ? "₹5 per conversation · starts at ₹2,500/month"
+                  : "$0.10 per conversation · starts at $50/month"}
+              </p>
+
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm text-[#737373]">
+                  Conversations per month
+                </span>
+                <span className="text-sm font-semibold text-[#0a0a0a]">
+                  {conversations.toLocaleString()}
+                </span>
+              </div>
+
+              <input
+                type="range"
+                min={MIN_CONV}
+                max={MAX_CONV}
+                step={CONV_STEP}
+                value={conversations}
+                onChange={(e) => setConversations(Number(e.target.value))}
+                className="conv-slider"
+                style={{
+                  background: `linear-gradient(to right, #0a0a0a ${sliderFillPct}%, #e5e5e5 ${sliderFillPct}%)`,
+                }}
+              />
+
+              <div className="flex justify-between mt-2">
+                <span className="text-xs text-[#737373]">500</span>
+                <span className="text-xs text-[#737373]">10,000</span>
+              </div>
+            </div>
+
+            <div className="md:w-48 flex flex-col md:items-end">
+              <div className="flex items-baseline gap-1 mb-1">
+                <span className="text-5xl font-bold text-[#0a0a0a]">
+                  {formatSliderPrice(conversations, region)}
+                </span>
+              </div>
+              <p className="text-sm text-[#737373] mb-1">per month</p>
+              <p className="text-xs text-[#737373] mb-5">
+                {conversations.toLocaleString()} conv ×{" "}
+                {region === "IN" ? "₹5" : "$0.10"}
+              </p>
+              <button className="cursor-pointer rounded-lg px-6 py-3 text-sm font-medium bg-black text-white hover:bg-black/80 transition-all duration-200">
+                Get Started
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Fixed plan cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 border border-[#e5e5e5] rounded-2xl bg-white overflow-hidden">
           {plans.map((plan, index) => (
             <div
@@ -284,9 +384,7 @@ export default function Pricing() {
                   <li key={feature} className="flex items-start gap-2.5">
                     <Check
                       className={`mt-0.5 flex-shrink-0 ${
-                        plan.highlighted
-                          ? "text-[#2d7a2d]"
-                          : "text-[#737373]"
+                        plan.highlighted ? "text-[#2d7a2d]" : "text-[#737373]"
                       }`}
                       size={18}
                     />
